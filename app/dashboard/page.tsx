@@ -9,7 +9,7 @@ interface Job {
   _id: string;
   title: string;
   location: string;
-  salary: string;
+  salary: number;
   status: string;
   appliedDate: string;
 }
@@ -21,6 +21,7 @@ function Home() {
     const fetchData = async () => {
       const response = await fetch("/api/getJobs");
       const data = await response.json();
+      console.log(data);
       setJobs(data);
     };
     fetchData();
@@ -37,6 +38,3 @@ function Home() {
 
 export default Home;
 
-// TODO 1: Implement GitHub and Google OAuth login
-// TODO 2: Route protection
-// TODO 3: ...

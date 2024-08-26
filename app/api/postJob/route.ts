@@ -1,18 +1,20 @@
 import { NextResponse } from "next/server";
-import { Job } from "@/app/models/jobModel";
+import { db } from "@/db";
 
 export async function POST(request: Request) {
   const data = await request.json();
   const { title, company, location, salary, status, appliedDate } = data;
 
   try {
-    const newJob = await Job.create({
-      title,
-      company,
-      location,
-      salary,
-      status,
-      appliedDate,
+    const newJob = await db.job.create({
+      data: {
+        title,
+        company,
+        location,
+        salary,
+        status,
+        appliedDate,
+      },
     });
     if (!newJob) {
       return NextResponse.json("Error creating job");

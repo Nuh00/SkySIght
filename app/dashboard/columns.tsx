@@ -19,7 +19,7 @@ interface Job {
   _id: string;
   title: string;
   location: string;
-  salary: string;
+  salary: number;
   status: string;
   appliedDate: string;
 }
@@ -154,10 +154,12 @@ export const columns: ColumnDef<Job>[] = [
     ),
     accessorKey: "appliedDate",
     cell: ({ row }) => {
-      const appliedDate = row.getValue("appliedDate");
-      const formattedDate = new Date(
-        appliedDate as string
-      ).toLocaleDateString();
+      const appliedDate = row.getValue("appliedDate") as string;
+      const dateWithoutSuffix = appliedDate.replace(/(st|nd|rd|th),/, ",");
+      const date = new Date(dateWithoutSuffix);
+
+      const options = { year: "numeric", month: "long", day: "numeric" };
+      const formattedDate = date.toLocaleDateString(undefined);
       return (
         <div className="flex justify-center text-right p-4 border-none">
           {formattedDate}

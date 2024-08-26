@@ -31,14 +31,12 @@ function CardWrapper({
       </CardHeader>
       <CardContent>{children}</CardContent>
 
-      {showSocial && (
-        <CardFooter>
-          <Social />
-        </CardFooter>
-      )}
-
       <CardFooter>
         <Social />
+      </CardFooter>
+
+      <CardFooter>
+        <BackButton label={backButtonLabel} href={backButtonHref} />
       </CardFooter>
     </Card>
   );

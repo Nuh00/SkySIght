@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { Job } from "@/app/models/jobModel";
+import { db } from "@/db";
 
 export async function DELETE(
   request: Request,
@@ -7,8 +7,12 @@ export async function DELETE(
 ) {
   const { id } = params;
   try {
-    const deletedJob = await Job.findOneAndDelete({ _id: id });
-    if (!deletedJob) {
+    const deletedJob = await db.job.deleteMany({
+      where: {
+        id: id,
+      },
+    });
+    if (deletedJob.count === 0) {
       return NextResponse.json({ message: "Job not found" });
     }
 

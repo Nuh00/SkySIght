@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { dbConnect } from "@/lib/mongo";
 import ThemeContextProvider from "@/context/theme.context-provider";
+import { SessionProvider } from "next-auth/react";
+import { auth } from "@/auth";
+import Navbar from "./components/Navbar";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -16,13 +18,38 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const db = await dbConnect();
-
+  const session = await auth();
   return (
     <html lang="en">
-      <ThemeContextProvider>
-        <body className={`${inter.className} dark:bg-black bg-white `}>{children}</body>
-      </ThemeContextProvider>
+      <body className={`${inter.className} dark:bg-black bg-white `}>
+        <SessionProvider session={session}>
+          <ThemeContextProvider>
+            <Navbar />
+            {children}
+          </ThemeContextProvider>
+        </SessionProvider>
+      </body>
     </html>
   );
 }
+
+
+// ** Notes: **
+//!! Errors fixed:
+// - Hydration error was being caused by multiple instances of the Navbar component being rendered in the layout.tsx file. This was fixed by removing the 
+// html and body tags from the dashboard layout.tsx file  and placing them in the main layout.tsx file.
+
+// Button on navbar wouldnt take in a on click method within a server side rendered component. 
+// This was fixed by creating a new component called Logout.tsx and importing it into the Navbar component.
+// ... making the logout button a client side rendered component and having the on click functionality within the Logout.tsx file. Then importing the Logout.tsx file into the Navbar component.
+
+
+
+// - User is able to log in with google and github and be redirected to the home page
+// - User is able to log out and be redirected to the landing page
+// - User image and name is displayed on the navbar
+
+
+
+// todo - protect routes from users who are not logged in
+// todo - user log in through credentials AKA email and password
