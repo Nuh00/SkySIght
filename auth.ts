@@ -31,6 +31,23 @@ export const {
         email: { label: "Email", type: "email" },
         password: { label: "Password", type: "password" },
       },
+      authorize: async (credentials) => {
+        let user: any = await db.user.findUnique({
+          where: { email: credentials.email },
+        });
+        if (!user) {
+          throw new Error("No user found");
+        }
+        const isValid = await compare(
+          credentials.password as string,
+          user.password
+        );
+        if (!isValid) {
+          throw new Error("Password is incorrect");
+        }
+
+        return user;
+      },
     }),
   ],
 });
@@ -42,7 +59,7 @@ export const {
 
 // export function middleware(req: Request) {
 //   const isLoggedIn = !!req.auth;
-//   const url = new URL(req.url);
+//   const url = new URL(req.url);z
 //   console.log(`Route: ${url.pathname}, ${isLoggedIn}`);
 
 //   // You can perform additional checks or logic here if needed

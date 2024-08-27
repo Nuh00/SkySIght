@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import CardWrapper from "./card-wrapper";
 
 import { useForm } from "react-hook-form";
@@ -19,15 +19,15 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import Social from "./social";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { login } from "../../../actions/login";
-import { github } from "@/actions/github";
+import { loginWithCreds } from "@/actions/auth";
+import { useRouter } from "next/navigation";
 
 function LoginForm() {
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState<string | undefined>(undefined);
+  const router = useRouter();
   // const [success, setSuccess] = useState<string | undefined>(undefined);
 
   const form = useForm<z.infer<typeof LoginSchema>>({
@@ -42,12 +42,14 @@ function LoginForm() {
     setError(undefined);
     // setSuccess(undefined);
     startTransition(() => {
-      login(values).then((data) => {
+      loginWithCreds(values).then((data) => {
         if (data) {
           if (data.error) {
             setError(data.error);
           }
         }
+        router.push("/dashboard"); // Redirect to dashboard after login
+        router.refresh(); // Refresh the page to navbar changes
       });
     });
   };

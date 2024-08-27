@@ -19,7 +19,7 @@ const Navbar = async () => {
           {!session?.user ? (
             <>
               <Link
-                href="/register"
+                href="/login"
                 className="h-10 rounded-md px-8 flex justify-center items-center bg-gradient-to-r from-darkest-purple to-light-purple text-white font-bold  transition duration-500 ease-in-out hover:bg-blue-600 hover:rounded-full   "
               >
                 <div> Login</div>

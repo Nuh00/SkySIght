@@ -21,12 +21,14 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { register } from "../../../actions/register";
+import { register } from "@/actions/auth";
+import { redirect, useRouter } from "next/navigation";
 
 function RegisterForm() {
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState<string | undefined>(undefined);
   const [success, setSuccess] = useState<string | undefined>(undefined);
+  const router = useRouter();
 
   const form = useForm<z.infer<typeof RegisterSchema>>({
     resolver: zodResolver(RegisterSchema),
@@ -46,6 +48,7 @@ function RegisterForm() {
           setError(data.error);
         } else {
           setSuccess(data.success);
+          router.push("/login");
         }
       });
     });

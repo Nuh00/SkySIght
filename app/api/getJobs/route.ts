@@ -1,12 +1,7 @@
 import { NextResponse } from "next/server";
-// import { Job } from "@/app/models/jobModel";
 import { db } from "@/db";
 
-// export async function GET() {
-//   const jobs = await Job.find();
-//   console.log(jobs);
-//   return NextResponse.json(jobs);
-// }
+
 
 // ** Get request is working
 

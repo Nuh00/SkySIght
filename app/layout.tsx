@@ -45,11 +45,19 @@ export default async function RootLayout({
 
 
 
+// ** Updates: **
 // - User is able to log in with google and github and be redirected to the home page
 // - User is able to log out and be redirected to the landing page
 // - User image and name is displayed on the navbar
 
+// - User is able to log in with email and password and be redirected to the home page
+// - User is able to register with email and password and be redirected to the login page
 
 
-// todo - protect routes from users who are not logged in
-// todo - user log in through credentials AKA email and password
+
+
+
+// ** Next Steps: **
+// todo - connect each user with their unique set of data
+// ? todo - 1. google and github users 
+// ? todo - 2. email and password users
