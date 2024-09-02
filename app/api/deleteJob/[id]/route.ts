@@ -16,6 +16,7 @@ export async function DELETE(
       return NextResponse.json({ message: "Job not found" });
     }
 
+
     return NextResponse.json({ message: "Job deleted successfully" });
   } catch (error) {
     return NextResponse.json({ message: "Job not found" });

@@ -92,22 +92,22 @@ const config = {
           "50%": { left: "0px", top: "150px" },
           "75%": { left: "50px", top: "100px" },
           "100%": { left: "0px", top: "0px" },
-
         },
-        "accordion-down": {
-          from: { height: "0" },
-          to: { height: "var(--radix-accordion-content-height)" },
-        },
-        "accordion-up": {
-          from: { height: "var(--radix-accordion-content-height)" },
-          to: { height: "0" },
-        },
+      },
+      "accordion-down": {
+        from: { height: "0" },
+        to: { height: "var(--radix-accordion-content-height)" },
+      },
+      "accordion-up": {
+        from: { height: "var(--radix-accordion-content-height)" },
+        to: { height: "0" },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
         one: "one 10s infinite",
         two: "two 10s infinite",
+        three: "three 10s infinite",
       },
     },
   },

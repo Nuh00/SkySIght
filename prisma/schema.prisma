@@ -100,6 +100,7 @@ model Job {
   salary     Int
   status     String
   appliedDate String
+  userId      String 
 
   
 }

@@ -1,8 +1,16 @@
 import { NextResponse } from "next/server";
 import { db } from "@/db";
+import { getUniqueUser } from "@/actions/fetchUserInfo";
+import { auth } from "@/auth";
 
 export async function POST(request: Request) {
   const data = await request.json();
+  const session = await auth();
+  if (!session?.user?.email) {
+    throw new Error("User email is not available");
+  }
+  const user = await getUniqueUser(session.user?.email);
+  const userId = user?.id as string;
   const { title, company, location, salary, status, appliedDate } = data;
 
   try {
@@ -14,12 +22,13 @@ export async function POST(request: Request) {
         salary,
         status,
         appliedDate,
+        userId,
       },
     });
     if (!newJob) {
       return NextResponse.json("Error creating job");
     }
-    return NextResponse.json("Job created successfully");
+    return NextResponse.json(newJob);
   } catch (error) {
     return NextResponse.json("Error creating job");
   }

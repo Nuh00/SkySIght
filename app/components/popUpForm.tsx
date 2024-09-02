@@ -2,7 +2,9 @@
 
 import Image from "next/image";
 import toast, { Toaster } from "react-hot-toast";
-
+import { UseSelector, useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "@/state/store";
+import { addJob } from "@/state/slice";
 import {
   Select,
   SelectContent,
@@ -54,6 +56,8 @@ export const PopUpForm = ({
   const [error, setError] = useState<string | undefined>(undefined);
   const [success, setSuccess] = useState<string | undefined>(undefined);
 
+  const dispatch = useDispatch<AppDispatch>();// dispatch to redux store
+
   const form = useForm<z.infer<typeof createJobSchema>>({
     resolver: zodResolver(createJobSchema),
     defaultValues: {
@@ -69,7 +73,7 @@ export const PopUpForm = ({
   const onSubmit = async (values: z.infer<typeof createJobSchema>) => {
     setError(undefined);
     setSuccess(undefined);
-    
+
     startTransition(async () => {
       console.log(values);
 
@@ -82,8 +86,10 @@ export const PopUpForm = ({
       });
 
       if (response.ok) {
+        const data = await response.json();
         toast.success("Job created successfully");
-        
+        dispatch(addJob(data));
+
         form.reset();
       } else {
         toast.error("Error creating job");
@@ -93,8 +99,8 @@ export const PopUpForm = ({
 
   return (
     <>
-        <Toaster position="top-center" />
-        {/* Divs for the backdrop containing the whole card */}
+      <Toaster position="top-center" />
+      {/* Divs for the backdrop containing the whole card */}
       <div
         className="flex items-center justify-center  h-full w-full absolute top-0 backdrop-filter backdrop-brightness-75 backdrop-blur-md z-50"
         onClick={handleFormModal}

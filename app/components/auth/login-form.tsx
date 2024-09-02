@@ -41,16 +41,16 @@ function LoginForm() {
   const onSubmit = async (values: z.infer<typeof LoginSchema>) => {
     setError(undefined);
     // setSuccess(undefined);
-    startTransition(() => {
-      loginWithCreds(values).then((data) => {
-        if (data) {
-          if (data.error) {
-            setError(data.error);
-          }
+
+    startTransition(async () => {
+      const data = await loginWithCreds(values);
+      if (data) {
+        if (data.error) {
+          setError(data.error);
         }
-        router.push("/dashboard"); // Redirect to dashboard after login
-        router.refresh(); // Refresh the page to navbar changes
-      });
+      }
+      router.push("/dashboard"); // Redirect to dashboard after login
+      router.refresh(); // Refresh the page to navbar changes
     });
   };
 

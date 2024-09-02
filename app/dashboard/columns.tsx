@@ -15,27 +15,34 @@ import {
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "@/state/store";
+import { deleteJob } from "@/state/slice";
+
 interface Job {
-  _id: string;
+  id: string;
   title: string;
+  company: string;
   location: string;
   salary: number;
   status: string;
   appliedDate: string;
 }
 
+
+
 export const columns: ColumnDef<Job>[] = [
   {
     id: "actions",
     cell: ({ row }) => {
       const jobItem = row.original;
-      const router = useRouter();
+      const dispatch = useDispatch<AppDispatch>();
 
       const handleDelete = async () => {
         const confirmed = confirm("Are you sure you want to delete this job?");
         if (confirmed) {
           try {
-            const response = await fetch(`/api/deleteJob/${jobItem._id}`, {
+            const response = await fetch(`/api/deleteJob/${jobItem.id}`, {
               method: "DELETE",
               headers: {
                 "Content-Type": "application/json",
@@ -43,6 +50,7 @@ export const columns: ColumnDef<Job>[] = [
             });
 
             if (response.ok) {
+              dispatch(deleteJob({ id: jobItem.id }));
               toast.success("Job deleted successfully");
             } else {
               const data = await response.json();
@@ -148,11 +156,12 @@ export const columns: ColumnDef<Job>[] = [
   },
   {
     header: () => (
-      <div className=" flex justify-center hover:text-white transition-all cursor-pointer">
+      <div className="hover:text-white transition-all  cursor-pointer flex flex-col items-center">
         Applied Date
       </div>
     ),
     accessorKey: "appliedDate",
+
     cell: ({ row }) => {
       const appliedDate = row.getValue("appliedDate") as string;
       const dateWithoutSuffix = appliedDate.replace(/(st|nd|rd|th),/, ",");
