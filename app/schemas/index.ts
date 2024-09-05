@@ -1,3 +1,4 @@
+import { link } from "fs";
 import * as z from "zod";
 
 export const LoginSchema = z.object({
@@ -36,4 +37,5 @@ export const createJobSchema = z.object({
   appliedDate: z.string().min(2, {
     message: "Applied Date is required",
   }),
+  link: z.string().min(2, {}).optional(),
 });

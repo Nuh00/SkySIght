@@ -12,12 +12,21 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
+
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "@/state/store";
-import { deleteJob } from "@/state/slice";
+import { deleteJob, updateJob } from "@/state/slice";
+import { use, useState } from "react";
+import { set } from "date-fns";
 
 interface Job {
   id: string;
@@ -27,9 +36,8 @@ interface Job {
   salary: number;
   status: string;
   appliedDate: string;
+  link: string;
 }
-
-
 
 export const columns: ColumnDef<Job>[] = [
   {
@@ -38,6 +46,9 @@ export const columns: ColumnDef<Job>[] = [
       const jobItem = row.original;
       const dispatch = useDispatch<AppDispatch>();
 
+      {
+        /* <DropdownMenu> */
+      }
       const handleDelete = async () => {
         const confirmed = confirm("Are you sure you want to delete this job?");
         if (confirmed) {
@@ -153,6 +164,86 @@ export const columns: ColumnDef<Job>[] = [
       </div>
     ),
     accessorKey: "status",
+
+    cell: ({ row }) => {
+      const jobItem = row.original; // Extract the row's original data
+      const dispatch = useDispatch<AppDispatch>(); // Rewrite the local state
+
+      const updateStatus = async (status: string) => {
+        try {
+          const response = await fetch(`/api/updateJob/${jobItem.id}`, {
+            method: "PATCH",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ status }),
+          });
+
+          if (response.ok) {
+            const data = await response.json();
+            console.log(data);
+            dispatch(updateJob(data));
+
+            toast.success("Job status updated successfully");
+          } else {
+            const data = await response.json();
+            alert(`Failed to update job status: ${data.message}`);
+          }
+        } catch (error) {
+          toast.error("Failed to update job status");
+        }
+      };
+
+      return (
+        <Select
+          value={jobItem.status}
+          onValueChange={(value) => {
+            updateStatus(value);
+          }}
+        >
+          <SelectTrigger>
+            <SelectValue>{jobItem.status}</SelectValue>
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem className="text-green-400" value="Accepted">
+              Applied
+            </SelectItem>
+            <SelectItem className="text-red-500" value="Rejected">
+              Rejected
+            </SelectItem>
+            <SelectItem className="text-yellow-600" value="Pending">
+              Pending
+            </SelectItem>
+            <SelectItem className="text-gray-400" value="Ghosted">
+              Ghosted
+            </SelectItem>
+          </SelectContent>
+        </Select>
+      );
+    },
+  },
+  {
+    header: () => (
+      <div className="hover:text-white transition-all inline cursor-pointer">
+        Link
+      </div>
+    ),
+    accessorKey: "link",
+    cell: ({ row }) => {
+      const link = row.getValue("link");
+      return (
+        link && (
+          <a
+            href={link as string}
+            target="_blank"
+            rel="noreferrer"
+            className="text-blue-500 hover:underline"
+          >
+            View job
+          </a>
+        )
+      );
+    },
   },
   {
     header: () => (

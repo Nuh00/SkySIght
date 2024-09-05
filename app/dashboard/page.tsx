@@ -24,6 +24,7 @@ function Home() {
     const fetchData = async () => {
       const response = await fetch("/api/getJobs");
       const data: Job[] = await response.json(); // initial fetch of jovs
+      console.log(data);
       if (data) {
         dispatch(initialJobs(data));
       }

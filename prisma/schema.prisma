@@ -10,6 +10,13 @@ datasource db {
   provider = "mongodb"
   url      = env("DATABASE_URL")
 }
+
+enum JobStatus {
+  Accepted
+  Rejected
+  Pending
+  Ghosted
+}
  
 
 
@@ -98,9 +105,10 @@ model Job {
   company    String
   location   String
   salary     Int
-  status     String
+  status     JobStatus
   appliedDate String
   userId      String 
+  link        String?
 
   
 }
