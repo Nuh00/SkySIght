@@ -5,6 +5,11 @@ import { Button } from "@/components/ui/button";
 import { logout } from "@/actions/auth";
 import { auth } from "@/auth";
 import Logout from "./Logout";
+import dove from "@/public/dove.svg";
+import sharpDoveB from "@/public/sharpDoveB.svg";
+import sharpDoveW from "@/public/sharpDoveW.svg";
+import eagleBlack from "@/public/eagleBlack.svg";
+import eagleWhite from "@/public/eagleWhite.svg";
 
 const Navbar = async () => {
   const session = await auth();
@@ -12,8 +17,30 @@ const Navbar = async () => {
   return (
     <div className="fixed top-0 w-full h-24 p-6    ">
       <div className="flex items-center justify-between p-6  h-24 mx-auto px-4  ">
-        <div>
-          <h1 className="text-2xl font-bold text-white">SkySight</h1>
+        <div className="flex gap-2">
+          <div>
+            <h1 className="text-2xl font-bold text-black dark:text-white">
+              SkySight
+            </h1>
+          </div>
+          <div>
+            <Image
+              src = {eagleBlack}
+              alt="picture of eagle"
+              width={30}
+              height={30}
+              className="dark:hidden"
+            />
+
+            <Image
+              src={eagleWhite}
+              alt="picture of eagle"
+              width={30}
+              height={30}
+              className="hidden dark:block"
+            />
+            
+          </div>
         </div>
         <div className="flex gap-5">
           {!session?.user ? (
@@ -33,18 +60,18 @@ const Navbar = async () => {
             </>
           ) : (
             <>
-            <div className="flex items-center gap-x-2 text-sm">
-              {session.user?.name}
-              {session?.user?.image && (
-                <Image
-                  src={session.user.image}
-                  width={30}
-                  height={30}
-                  alt="profile"
-                  className="rounded-full"
-                />
-              )}
-            </div>
+              <div className="flex items-center gap-x-2 text-sm">
+                {session.user?.name}
+                {session?.user?.image && (
+                  <Image
+                    src={session.user.image}
+                    width={30}
+                    height={30}
+                    alt="profile"
+                    className="rounded-full"
+                  />
+                )}
+              </div>
               <Logout />
             </>
           )}

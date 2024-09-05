@@ -50,8 +50,6 @@ export const columns: ColumnDef<Job>[] = [
         /* <DropdownMenu> */
       }
       const handleDelete = async () => {
-        const confirmed = confirm("Are you sure you want to delete this job?");
-        if (confirmed) {
           try {
             const response = await fetch(`/api/deleteJob/${jobItem.id}`, {
               method: "DELETE",
@@ -71,7 +69,7 @@ export const columns: ColumnDef<Job>[] = [
           } catch (error) {
             toast.error("Failed to delete job");
           }
-        }
+        
       };
 
       return (
@@ -84,9 +82,9 @@ export const columns: ColumnDef<Job>[] = [
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem>Edit</DropdownMenuItem>
+            {/* <DropdownMenuItem>Edit</DropdownMenuItem> */}
             <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={handleDelete}>Delete</DropdownMenuItem>
+            <DropdownMenuItem className="hover: text-red-500" onClick={handleDelete}>Delete</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       );
@@ -206,7 +204,7 @@ export const columns: ColumnDef<Job>[] = [
           </SelectTrigger>
           <SelectContent>
             <SelectItem className="text-green-400" value="Accepted">
-              Applied
+              Accepted
             </SelectItem>
             <SelectItem className="text-red-500" value="Rejected">
               Rejected

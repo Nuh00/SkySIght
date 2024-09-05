@@ -15,6 +15,11 @@ export default async function middleware(request: NextRequest) {
     const absoluteUrl = new URL("/", request.nextUrl.origin);
     return NextResponse.redirect(absoluteUrl.toString());
   }
+
+  if (session && request.nextUrl.pathname === "/") {
+    const absoluteUrl = new URL("/dashboard", request.nextUrl.origin);
+    return NextResponse.redirect(absoluteUrl.toString());
+  }
     return NextResponse.next();
 }
 
