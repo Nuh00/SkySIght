@@ -15,7 +15,7 @@ function Home() {
   return (
     <>
       <HeroSection />
-      <LandingCards />
+      
     </>
   );
 }

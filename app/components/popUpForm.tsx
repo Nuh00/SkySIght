@@ -50,7 +50,7 @@ export const PopUpForm = ({
 }: {
   handleFormModal: () => void;
 }) => {
-  const [date, setDate] = React.useState<Date | null>(null);
+  const [date, setDate] = useState(new Date());
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState<string | undefined>(undefined);
   const [success, setSuccess] = useState<string | undefined>(undefined);
@@ -65,7 +65,7 @@ export const PopUpForm = ({
       location: "",
       salary: 0,
       status: "",
-      appliedDate: "",
+      appliedDate: format(new Date(), "PPP"), // !!
       link: "",
     },
   });
@@ -107,13 +107,13 @@ export const PopUpForm = ({
       >
         <div
           onClick={(e) => e.stopPropagation()}
-          className="min-w-[80%] sm:min-w-[400px] rounded-lg shadow w-[400px] "
+          className="min-w-[80%] sm:min-w-[400px] rounded-lg shadow w-[480px] "
         >
           <CardWrapperForm headerLabel="Create a new job">
             <Form {...form}>
               <form
                 onSubmit={form.handleSubmit(onSubmit)}
-                className="space-y-6 text-light-purple h-full"
+                className="space-y-6 text-light-purple h-full py-10"
               >
                 <main className="h-full flex flex-col items-center justify-between">
                   <div className="space-y-4">
@@ -275,8 +275,8 @@ export const PopUpForm = ({
                                 <Button
                                   variant={"outline"}
                                   className={cn(
-                                    "w-[170px] justify-start text-left font-normal bg-black mb-40",
-                                    !date && "text-muted-foreground"
+                                    "w-[170px] justify-start text-left font-normal bg-black mb-40"
+                                    // !date && "text-muted-foreground"
                                   )}
                                 >
                                   <CalendarIcon className="mr-2 h-4 w-4" />
@@ -294,14 +294,15 @@ export const PopUpForm = ({
                               >
                                 <Calendar
                                   mode="single"
-                                  selected={date || new Date()}
+                                  selected={date}
                                   // onSelect={(data) => setDate(data || null)}
+
                                   onSelect={(date) => {
-                                    setDate(date || null);
+                                    console.log(`date selected`, date);
+
                                     if (date) {
-                                      field.onChange(
-                                        format(date, "PPP") || null
-                                      );
+                                      field.onChange(format(date, "PPP"));
+                                      setDate(date);
                                     }
                                   }}
                                   initialFocus
@@ -317,14 +318,14 @@ export const PopUpForm = ({
 
                   <FormError message={error} />
                   <FormSuccess message={success} />
-                  <div className="flex justify-between gap-2 w-full">
+                  <div className="flex justify-between gap-2 w-full pt-6">
                     <Button
                       onClick={handleFormModal}
                       disabled={isPending}
                       variant={"destructive"}
                       type="submit"
                       size="lg"
-                      className="w-full mt-30 "
+                      className="w-full mt-30  "
                     >
                       Cancel
                     </Button>

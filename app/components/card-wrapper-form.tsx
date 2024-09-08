@@ -8,7 +8,7 @@ interface CardWrapperFormProps {
 
 function CardWrapperForm({ children, headerLabel }: CardWrapperFormProps) {
   return (
-    <Card className="flex flex-col w-full h-[600px] shadow-md bg-black">
+    <Card className="flex flex-col w-full h-[750px] shadow-md bg-opacity/90 ">
       <CardHeader className="text-white">
         <Header label={headerLabel} />
       </CardHeader>

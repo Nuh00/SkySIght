@@ -34,8 +34,6 @@ export const createJobSchema = z.object({
   status: z.string().min(2, {
     message: "Status is required",
   }),
-  appliedDate: z.string().min(2, {
-    message: "Applied Date is required",
-  }),
+  appliedDate: z.string().optional(),
   link: z.string().min(2, {}).optional(),
 });
