@@ -57,7 +57,7 @@ function LoginForm() {
   return (
     <CardWrapper
       headerLabel="Welcome back"
-      backButtonLabel="Dont have an account? Register"
+      backButtonLabel="Don't have an account? Register"
       backButtonHref="/register"
       showSocial={false}
     >

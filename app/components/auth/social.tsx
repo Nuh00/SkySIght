@@ -16,7 +16,7 @@ function Social() {
           className="w-full"
           onClick={() => login("github")}
         >
-          <FaGithub className="h-5 w-5" />
+          <FaGithub className="h-5 w-5 text-white" />
         </Button>
       </div>
       <div className="flex-1">

@@ -8,6 +8,8 @@ import { signIn, signOut } from "@/auth";
 import { revalidatePath } from "next/cache";
 import { db } from "@/db";
 import { AuthError } from "next-auth";
+import { generateVerificationToken } from "@/lib/token";
+import { sendVerificationEmail } from "@/lib/mail";
 
 export const login = async (provider: string) => {
   await signIn(provider, {
@@ -25,7 +27,7 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
   // Validate fields... client side validation can always be bypassed
 
   const validatedFields = RegisterSchema.safeParse(values);
-  console.log(validatedFields);
+  console.log(`yooooo`, validatedFields);
 
   if (!validatedFields.success) {
     return { error: "Invalid fields" };
@@ -52,6 +54,9 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
       },
     });
 
+    const verificationToken = await generateVerificationToken(email);
+    await sendVerificationEmail(email, verificationToken.token);
+
     return { success: `User created` };
   } catch (error) {
     return { error: "Error creating user" };
@@ -73,7 +78,6 @@ export const loginWithCreds = async (values: z.infer<typeof LoginSchema>) => {
     await signIn("credentials", {
       email,
       password,
-      
     });
   } catch (error: any) {
     if (error instanceof AuthError) {

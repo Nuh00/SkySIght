@@ -23,7 +23,7 @@ export default function RootLayout({
       </div>
       {children}
       <ThemeSwitchButton />
-      <Toaster position="bottom-left" />
+      <Toaster position="top-center" />
     </div>
   );
 }

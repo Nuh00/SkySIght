@@ -99,7 +99,7 @@ export const PopUpForm = ({
 
   return (
     <>
-      <Toaster position="top-center" />
+      {/* <Toaster position="top-center" /> */}
       {/* Divs for the backdrop containing the whole card */}
       <div
         className="flex items-center justify-center  h-full w-full absolute top-0 backdrop-filter backdrop-brightness-75 backdrop-blur-md z-50"
