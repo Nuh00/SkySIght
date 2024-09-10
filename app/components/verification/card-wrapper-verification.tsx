@@ -1,45 +1,42 @@
+"use client";
+
 import {
   Card,
-  CardHeader,
   CardContent,
+  CardHeader,
   CardFooter,
 } from "@/components/ui/card";
-import React from "react";
-import Header from "./header";
-import Social from "./social";
-import BackButton from "./back-button";
+import BackButton from "../auth/back-button";
+import Header from "../auth/header"
 
 interface CardWrapperProps {
   children: React.ReactNode;
   headerLabel: string;
   backButtonLabel: string;
+  title: string;
+  showSocial?: boolean;
   backButtonHref: string;
-  showSocial: boolean;
 }
 
-function CardWrapper({
+const CardWrapperVerification = ({
   children,
   headerLabel,
   backButtonLabel,
   backButtonHref,
-  showSocial,
-}: CardWrapperProps) {
+  title,
+  // showSocial,
+}: CardWrapperProps) => {
   return (
-    <Card className="w-[400px] shadow-md bg-opacity-0% text-white">
+    <Card className="shadow-md w-full h-screen flex flex-col justify-center items-center">
       <CardHeader>
-        <Header label={headerLabel} title="SkySight" />
+        <Header label={headerLabel} title="Almost there..." />
       </CardHeader>
       <CardContent>{children}</CardContent>
-
-      <CardFooter>
-        <Social />
-      </CardFooter>
-
       <CardFooter>
         <BackButton label={backButtonLabel} href={backButtonHref} />
       </CardFooter>
     </Card>
   );
-}
+};
 
-export default CardWrapper;
+export default CardWrapperVerification;

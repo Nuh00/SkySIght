@@ -34,7 +34,7 @@ function LoginForm() {
     resolver: zodResolver(LoginSchema),
     defaultValues: {
       email: "",
-      password: "",
+      // password: "",
     },
   });
 
@@ -49,7 +49,7 @@ function LoginForm() {
           setError(data.error);
         }
       }
-      router.push("/dashboard"); // Redirect to dashboard after login
+      router.push("/verify-email"); // Redirect to dashboard after login
       router.refresh(); // Refresh the page to navbar changes
     });
   };
@@ -82,7 +82,7 @@ function LoginForm() {
                 </FormItem>
               )}
             />
-            <FormField
+            {/* <FormField
               control={form.control}
               name="password"
               render={({ field }) => (
@@ -99,7 +99,7 @@ function LoginForm() {
                   <FormMessage />
                 </FormItem>
               )}
-            />
+            /> */}
           </div>
           <FormError message={error} />
           {/* <FormSuccess message={success} /> */}
@@ -109,7 +109,7 @@ function LoginForm() {
             size="lg"
             className="w-full"
           >
-            Log in
+            Send Verification Email
           </Button>
         </form>
       </Form>

@@ -1,12 +1,12 @@
 import { Card, CardHeader, CardContent } from "@/components/ui/card";
-import Header from "./auth/header";
+import Header from "../auth/header";
 
 interface CardWrapperFormProps {
   children: React.ReactNode;
   headerLabel: string;
 }
 
-function CardWrapperForm({ children, headerLabel }: CardWrapperFormProps) {
+function CardWrapperJob({ children, headerLabel }: CardWrapperFormProps) {
   return (
     <Card className="flex flex-col w-full h-[750px] shadow-md bg-opacity/90 ">
       <CardHeader className="text-white">
@@ -17,4 +17,4 @@ function CardWrapperForm({ children, headerLabel }: CardWrapperFormProps) {
   );
 }
 
-export default CardWrapperForm;
+export default CardWrapperJob;

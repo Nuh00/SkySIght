@@ -25,7 +25,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import LoginForm from "../components/auth/login-form";
 import { useState } from "react";
-import { PopUpForm } from "@/app/components/popUpForm";
+import { PopUpForm } from "@/app/components/dashboard/popUpForm";
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];

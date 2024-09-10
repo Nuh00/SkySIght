@@ -10,12 +10,13 @@ const font = Poppins({
 
 interface HeaderProps {
   label: string;
+  title: string;
 }
 
-function Header({ label }: HeaderProps) {
+function Header({ label,title }: HeaderProps) {
   return (
     <div className="w-full flex flex-col gap-y-4 items-center">
-      <h1 className={cn(font, "text-3xl font-bold")}>SkySight</h1>
+      <h1 className={cn(font, "text-3xl font-bold")}>{title}</h1>
       <p className="text-muted-foreground text-sm">{label}</p>
     </div>
   );

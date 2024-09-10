@@ -54,8 +54,8 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
       },
     });
 
-    const verificationToken = await generateVerificationToken(email);
-    await sendVerificationEmail(email, verificationToken.token);
+    // const verificationToken = await generateVerificationToken(email);
+    // await sendVerificationEmail(email, verificationToken.token);
 
     return { success: `User created` };
   } catch (error) {
@@ -67,26 +67,29 @@ export const loginWithCreds = async (values: z.infer<typeof LoginSchema>) => {
   // Validate fields... client side validation can always be bypassed
 
   const validatedFields = LoginSchema.safeParse(values);
+  console.log(`yooooo`, validatedFields);
 
   if (!validatedFields.success) {
     return { error: "Invalid fields" };
   }
 
-  const { email, password } = validatedFields.data;
+  const { email } = validatedFields.data;
+  console.log(`yooooo`, validatedFields);
 
   try {
-    await signIn("credentials", {
-      email,
-      password,
-    });
+    await signIn("resend", { email, redirectTo: "/dashboard" });
+    
+
   } catch (error: any) {
-    if (error instanceof AuthError) {
-      switch (error.type) {
-        case "CredentialsSignin":
-          return { error: "Invalid credentials" };
-        default:
-          return { error: "Something went wrong" };
-      }
-    }
+    // if (error instanceof AuthError) {
+    //   switch (error.type) {
+    //     case "CredentialsSignin":
+    //       return { error: "Invalid credentials" };
+    //     default:
+    //       return { error: "Something went wrong" };
+    //   }
+    // }
+
+    return { error: "Error logging in" };
   }
 };

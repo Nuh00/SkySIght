@@ -4,9 +4,11 @@ import NextAuth from "next-auth";
 
 import Github from "next-auth/providers/github";
 import Google from "next-auth/providers/google";
+import Resend from "next-auth/providers/resend";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import Credentials from "next-auth/providers/credentials";
 import { db } from "@/db";
+import { getUserById } from "./data/user";
 export const {
   handlers: { GET, POST },
   signIn,
@@ -15,40 +17,63 @@ export const {
 } = NextAuth({
   adapter: PrismaAdapter(db),
   session: { strategy: "jwt" },
+  // callbacks: {
+  //   async signIn(user, account) {
+  //     if (account?.provider !== "credentials") {
+  //       return true;
+  //     }
+
+  //     const existingUser = await getUserById(user.id ?? "");
+  //     if (!existingUser?.emailVerified) {
+  //       return false;
+  //     }
+
+  //     return true;
+  //   },
+  // },
   providers: [
-    Github({
-      clientId: process.env.GITHUB_CLIENT_ID,
-      clientSecret: process.env.GITHUB_CLIENT_SECRET,
+    Github,
+    Google,
+    Resend({
+      from: "Acme <onboarding@resend.dev>",
     }),
+    Credentials,
+    // Github({
+    //   clientId: process.env.GITHUB_CLIENT_ID,
+    //   clientSecret: process.env.GITHUB_CLIENT_SECRET,
+    // }),
 
-    Google({
-      clientId: process.env.GOOGLE_CLIENT_ID,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    }),
-    Credentials({
-      name: "Credentials",
-      credentials: {
-        email: { label: "Email", type: "email" },
-        password: { label: "Password", type: "password" },
-      },
-      authorize: async (credentials) => {
-        let user: any = await db.user.findUnique({
-          where: { email: credentials.email },
-        });
-        if (!user) {
-          throw new Error("No user found");
-        }
-        const isValid = await compare(
-          credentials.password as string,
-          user.password
-        );
-        if (!isValid) {
-          throw new Error("Password is incorrect");
-        }
+    // Google({
+    //   clientId: process.env.GOOGLE_CLIENT_ID,
+    //   clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    // }),
+    // Resend({
+    //   from: "Acme <onboarding@resend.dev>",
+    // }),
+    // Credentials({
+    //   name: "Credentials",
+    //   credentials: {
+    //     email: { label: "Email", type: "email" },
+    //     password: { label: "Password", type: "password" },
+    //   },
+    //   authorize: async (credentials) => {
+    //     let user: any = await db.user.findUnique({
+    //       where: { email: credentials.email },
+    //     });
+    //     if (!user) {
+    //       throw new Error("No user found");
+    //     }
+    //     const isValid = await compare(
+    //       credentials.password as string,
+    //       user.password
+    //     );
+    //     if (!isValid) {
+    //       throw new Error("Password is incorrect");
+    //     }
 
-        return user; // ??????
-      },
-    }),
+    //     return user; // ??????
+    //   },
+    // }),
   ],
 });
 

@@ -14,7 +14,7 @@ import {
 
 import { useState } from "react";
 import { useTransition } from "react";
-import { createJobSchema } from "../schemas";
+import { createJobSchema } from "../../schemas";
 import * as z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -43,7 +43,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import CardWrapperForm from "./card-wrapper-form";
+import CardWrapperForm from "./card-wrapper-job";
 
 export const PopUpForm = ({
   handleFormModal,

@@ -4,7 +4,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { logout } from "@/actions/auth";
 import { auth } from "@/auth";
-import Logout from "./Logout";
+import Logout from "./auth/Logout";
 import dove from "@/public/dove.svg";
 import sharpDoveB from "@/public/sharpDoveB.svg";
 import sharpDoveW from "@/public/sharpDoveW.svg";
@@ -19,13 +19,16 @@ const Navbar = async () => {
       <div className="flex items-center justify-between p-6  h-24 mx-auto px-4  ">
         <div className="flex gap-2">
           <div>
-            <h1 className="text-2xl font-bold text-black dark:text-white">
+            <Link
+              href="/"
+              className="text-2xl font-bold text-black dark:text-white"
+            >
               SkySight
-            </h1>
+            </Link>
           </div>
           <div>
             <Image
-              src = {eagleBlack}
+              src={eagleBlack}
               alt="picture of eagle"
               width={30}
               height={30}
@@ -39,39 +42,38 @@ const Navbar = async () => {
               height={30}
               className="hidden dark:block"
             />
-            
+          </div>
+        </div>
+        <div>
+          <div className="flex items-center gap-x-2 text-sm">
+            {session?.user?.name}
+            {session?.user?.image && (
+              <Image
+                src={session.user.image}
+                width={30}
+                height={30}
+                alt="profile"
+                className="rounded-full"
+              />
+            )}
           </div>
         </div>
         <div className="flex gap-5">
           {!session?.user ? (
             <>
-              <Link
-                href="/login"
-                className="h-10 rounded-md px-8 flex justify-center items-center bg-gradient-to-r from-darkest-purple to-light-purple text-white font-bold  transition duration-500 ease-in-out hover:bg-blue-600 hover:rounded-full   "
-              >
-                <div> Login</div>
-              </Link>
-              <Link
-                href="/register"
-                className="h-10 rounded-md px-8 flex justify-center items-center bg-gradient-to-r from-darkest-purple to-light-purple text-white font-bold  transition duration-500 ease-in-out hover:bg-blue-600 hover:rounded-full   "
-              >
-                <div> Register</div>
-              </Link>
+              <Button>
+                <Link href="/login" className=" ">
+                  <div> Login</div>
+                </Link>
+              </Button>
+              <Button>
+                <Link href="/register" className=" ">
+                  <div> Register</div>
+                </Link>
+              </Button>
             </>
           ) : (
             <>
-              <div className="flex items-center gap-x-2 text-sm">
-                {session.user?.name}
-                {session?.user?.image && (
-                  <Image
-                    src={session.user.image}
-                    width={30}
-                    height={30}
-                    alt="profile"
-                    className="rounded-full"
-                  />
-                )}
-              </div>
               <Logout />
             </>
           )}
