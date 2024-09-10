@@ -78,8 +78,6 @@ export const loginWithCreds = async (values: z.infer<typeof LoginSchema>) => {
 
   try {
     await signIn("resend", { email, redirectTo: "/dashboard" });
-    
-
   } catch (error: any) {
     // if (error instanceof AuthError) {
     //   switch (error.type) {
