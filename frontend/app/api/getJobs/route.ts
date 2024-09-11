@@ -2,12 +2,19 @@ import { NextResponse } from "next/server";
 import { db } from "@/db";
 import { auth } from "@/auth";
 import { getUniqueUser } from "@/actions/fetchUserInfo";
+import { cookies } from 'next/headers'
 
 // ** Get request is working
 
 export async function GET() {
   const session = await auth();
-  console.log(session);
+  const data = session?.user
+  // Send session to express server
+
+
+
+
+  console.log(`Serverless function session info: `,session);
   if (!session?.user?.email) {
     throw new Error("User email is not available");
   }
