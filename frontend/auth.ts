@@ -9,12 +9,14 @@ import { PrismaAdapter } from "@auth/prisma-adapter";
 import Credentials from "next-auth/providers/credentials";
 import { db } from "@/db";
 import { getUserById } from "./data/user";
+
 export const {
   handlers: { GET, POST },
   signIn,
   signOut,
   auth,
 } = NextAuth({
+
   adapter: PrismaAdapter(db),
   session: { strategy: "jwt" },
   // callbacks: {
