@@ -5,7 +5,7 @@ const cookieParser = require('cookie-parser');
 const prisma = require('./prismaClient');
 
 
-const userRoutes = require('./routes/Jobs');
+const getUserJobs = require('./routes/Jobs');
 const authSession = require('./middleware/authSession');
 
 
@@ -24,21 +24,11 @@ const corsOptions = {
 // Middleware
 app.use(express.json());
 app.use(cors(corsOptions));
-app.use(cookieParser()); // Parse cookies in incoming requests
-app.use(authSession);
+// app.use(cookieParser()); // Parse cookies in incoming requests
 
 
 // Routes
-
-app.get('/', (req, res) => {
-    const { session } = res.locals; // Access the session from res.locals
-    if (!session) {
-      return res.status(401).json({ message: 'Unauthorized: No session available' });
-    }
-    console.log(session);
-    res.json({ user: session.user }); // Respond with user data from the session
-  });
-
+app.use('/api/dashboard', getUserJobs);
 
 
 

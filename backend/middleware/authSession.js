@@ -31,13 +31,18 @@ async function authSession(req, res, next) {
 
   try {
             // Get the token from the request header
-            const session = req.body.session;
+            const sessionData = req.body.session;
 
-            console.log(`we are finnaly here...`,session);
-
-    
+            console.log(`Session data received:`, sessionData);
+            
+            // if (!sessionData || !sessionData.user || !sessionData.user.email) {
+            //   return res.status(401).send({ error: 'Invalid session data' });
+            // }
+            
+            req.session = sessionData;
             next();
         } catch (error) {
+            console.error('Error in authSession:', error);
             res.status(401).send({ error: 'Please authenticate' });
         }
 

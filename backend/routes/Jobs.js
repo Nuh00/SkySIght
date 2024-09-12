@@ -1,8 +1,6 @@
 const express = require('express');
-
-const prisma = require('../prismaClient');
-
-const userAuth = require('../middleware/authSession');
+const authSession = require('../middleware/authSession');
+const getUsersJobs = require('../controllers/jobControllers'); 
 
 
 const router = express.Router();
@@ -10,15 +8,9 @@ const router = express.Router();
 
 // middle ware
 
-router.use(userAuth);
+router.use(authSession);
 
-
-
-router.get('/', async (req, res) => {
-
-    const user = req.user; // User info from the decoded token
-
-});
+router.post('/', getUsersJobs );
 
 
 module.exports = router;
