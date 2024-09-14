@@ -1,6 +1,6 @@
 const express = require('express');
 const authSession = require('../middleware/authSession');
-const getUsersJobs = require('../controllers/jobControllers'); 
+const { getUsersJobs, createJob } = require('../controllers/jobControllers'); 
 
 
 const router = express.Router();
@@ -12,5 +12,7 @@ router.use(authSession);
 
 router.post('/', getUsersJobs );
 
+
+router.post('/create', createJob);
 
 module.exports = router;

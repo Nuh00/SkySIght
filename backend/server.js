@@ -1,7 +1,7 @@
 const express = require('express');
 require ('dotenv').config();
 const cors = require('cors');
-const prisma = require('./prismaClient');gtg
+const prisma = require('./prismaClient');
 
 
 const getUserJobs = require('./routes/Jobs');

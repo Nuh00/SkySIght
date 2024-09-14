@@ -32,6 +32,8 @@ async function authSession(req, res, next) {
   try {
             // Get the token from the request header
             const sessionData = req.body.session;
+            const userData = req.body.values || {};
+        
 
             console.log(`Session data received:`, sessionData);
             
@@ -40,6 +42,7 @@ async function authSession(req, res, next) {
             // }
             
             req.session = sessionData;
+            req.user = userData;
             next();
         } catch (error) {
             console.error('Error in authSession:', error);

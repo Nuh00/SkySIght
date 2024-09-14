@@ -1,6 +1,9 @@
 const prisma = require('../prismaClient'); 
 
 
+
+
+
 const getUserByEmail = async(email)=>{
 
     const user = await prisma.user.findUnique({
@@ -52,4 +55,40 @@ const getUsersJobs = async (req, res) => {
     }
 }
 
-module.exports = getUsersJobs;
+const createJob = async (req, res) => {
+    try {
+        const session = req.session; 
+        const user = await getUserByEmail(session.user.email);
+        console.log(`user data:`, user);
+        console.log(`user data:`, req.user);
+        const { title, company, location, salary, status, appliedDate, link } = req.user;
+        const job = await prisma.job.create({
+            data: {
+                title,
+                company,
+                location,
+                salary,
+                status,
+                appliedDate,
+                link,
+                userId: user.id
+            }
+        });
+
+        res.status(201).send(job);
+    } catch (error) {
+        console.error('Error in createJob:', error);
+        res.status(500).send({error: 'Internal server error', details: error.message});
+    }
+}
+
+
+
+
+
+
+module.exports = {
+    getUsersJobs,
+    createJob
+};
+
