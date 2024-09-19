@@ -7,6 +7,7 @@ import { useContext } from "react";
 import HeroSection from "./components/LandingPage/HeroSection";
 import LandingCards from "./components/LandingPage/LandingCards";
 import { auth } from "@/auth";
+import Footer from './components/Footer';
 function Home() {
 
 
@@ -15,6 +16,7 @@ function Home() {
   return (
     <>
       <HeroSection />
+      <Footer />
       
     </>
   );

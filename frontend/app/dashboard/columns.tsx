@@ -51,7 +51,7 @@ export const columns: ColumnDef<Job>[] = [
       }
       const handleDelete = async () => {
           try {
-            const response = await fetch(`/api/deleteJob/${jobItem.id}`, {
+            const response = await fetch(`http://localhost:4000/api/dashboard/delete/${jobItem.id}`, {
               method: "DELETE",
               headers: {
                 "Content-Type": "application/json",
@@ -169,7 +169,7 @@ export const columns: ColumnDef<Job>[] = [
 
       const updateStatus = async (status: string) => {
         try {
-          const response = await fetch(`/api/updateJob/${jobItem.id}`, {
+          const response = await fetch(`http://localhost:4000/api/dashboard/update/${jobItem.id}`, {
             method: "PATCH",
             headers: {
               "Content-Type": "application/json",
