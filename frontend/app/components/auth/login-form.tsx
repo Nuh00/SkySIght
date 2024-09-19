@@ -9,6 +9,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { LoginSchema } from "../../schemas/index";
 import { FormError } from "@/app/components/form-error";
 import { FormSuccess } from "../form-success";
+import { FormWarning } from "../form-warning";
 import { useTransition } from "react";
 
 import {
@@ -28,29 +29,29 @@ function LoginForm() {
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState<string | undefined>(undefined);
   const router = useRouter();
-  // const [success, setSuccess] = useState<string | undefined>(undefined);
+  const [success, setSuccess] = useState<string | undefined>(undefined);
+  const [warning, setWarning] = useState<string | undefined>(undefined);
 
   const form = useForm<z.infer<typeof LoginSchema>>({
     resolver: zodResolver(LoginSchema),
     defaultValues: {
       email: "",
-      // password: "",
     },
   });
-
   const onSubmit = async (values: z.infer<typeof LoginSchema>) => {
     setError(undefined);
-    // setSuccess(undefined);
-
+    setSuccess(undefined);
+    setWarning(undefined);
     startTransition(async () => {
-      const data = await loginWithCreds(values);
-      if (data) {
-        if (data.error) {
-          setError(data.error);
-        }
+      const result = await loginWithCreds(values);
+      if (result.error) {
+        setError(result.error);
+      } else if (result.warning) {
+        setWarning(result.warning);
+      } else {
+        router.push("/verify-email");
+        router.refresh();
       }
-      router.push("/verify-email"); // Redirect to dashboard after login
-      router.refresh(); // Refresh the page to navbar changes
     });
   };
 
@@ -82,27 +83,11 @@ function LoginForm() {
                 </FormItem>
               )}
             />
-            {/* <FormField
-              control={form.control}
-              name="password"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Password</FormLabel>
-                  <FormControl>
-                    <Input
-                      {...field}
-                      placeholder="Password"
-                      type="password"
-                      disabled={isPending}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            /> */}
+
           </div>
           <FormError message={error} />
-          {/* <FormSuccess message={success} /> */}
+          <FormSuccess message={success} />
+          <FormWarning message={warning} />
           <Button
             disabled={isPending}
             type="submit"

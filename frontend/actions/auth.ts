@@ -10,6 +10,7 @@ import { db } from "@/db";
 import { AuthError } from "next-auth";
 import { generateVerificationToken } from "@/lib/token";
 import { sendVerificationEmail } from "@/lib/mail";
+import { redirect } from "next/navigation";
 
 export const login = async (provider: string) => {
   await signIn(provider, {
@@ -63,31 +64,50 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
   }
 };
 
+
+let RESEND_DELAY = 5 * 60 * 1000; // 5 minutes in milliseconds
 export const loginWithCreds = async (values: z.infer<typeof LoginSchema>) => {
-  // Validate fields... client side validation can always be bypassed
-
   const validatedFields = LoginSchema.safeParse(values);
-  console.log(`yooooo`, validatedFields);
-
+  
   if (!validatedFields.success) {
     return { error: "Invalid fields" };
   }
 
   const { email } = validatedFields.data;
-  console.log(`yooooo`, validatedFields);
+
+  const existingToken = await db.verificationToken.findFirst({
+    where: { identifier: email },
+    orderBy: { expires: 'desc' }
+  });
+
+  if (existingToken) {
+    const now = new Date();
+    const tokenExpiry = new Date(existingToken.expires);
+    const timeSinceTokenCreation = tokenExpiry.getTime() - now.getTime() - RESEND_DELAY;
+
+    if (timeSinceTokenCreation > 0) {
+      return { warning: "Verification email already sent. Please check your inbox or spam folder." };
+    }
+  }
 
   try {
-    await signIn("resend", { email, redirectTo: "/dashboard" });
-  } catch (error: any) {
-    // if (error instanceof AuthError) {
-    //   switch (error.type) {
-    //     case "CredentialsSignin":
-    //       return { error: "Invalid credentials" };
-    //     default:
-    //       return { error: "Something went wrong" };
-    //   }
-    // }
+    const result = await signIn("resend", { email, redirectTo: '/dashboard' });
 
-    return { error: "Error logging in" };
+    if (!result) {
+      return { error: "Sign-in failed" };
+    }
+
+    return { success: "Verification email sent" };
+  } catch (error) {
+
+    // !! This is not actually an error, but a redirect since waiting for user to verify email
+    if (error instanceof Error && error.message === "NEXT_REDIRECT") {
+      // This is not actually an error, but a redirect
+      redirect("/verify-email");
+    }
+    if (error instanceof Error) {
+      return { error: error.message };
+    }
+    return { error: "An unknown error occurred" };
   }
 };
