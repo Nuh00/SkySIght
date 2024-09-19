@@ -5,7 +5,6 @@ const prisma = require('./prismaClient');
 
 
 const getUserJobs = require('./routes/Jobs');
-const authSession = require('./middleware/authSession');
 
 
 // Create express app

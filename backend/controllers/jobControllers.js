@@ -82,6 +82,43 @@ const createJob = async (req, res) => {
     }
 }
 
+const deleteJob = async (req, res) => {
+    try {
+        const {id}  = req.params;
+        const job = await prisma.job.delete({
+            where: {
+                id: id
+            }
+        });
+        res.status(200).send('Job deleted successfully');
+    } catch (error) {
+        console.error('Error in deleteJob:', error);
+
+}
+
+
+}
+
+const updateJob = async (req, res) => {
+    try {
+        const {id} = req.params;
+        const {status} = req.body;
+        const job = await prisma.job.update({
+            where: {
+                id: id
+                
+            },
+            data: {
+                status: status
+            }
+            
+        })
+        res.status(200).json(job);
+    } catch (error) {
+        console.error('Error in updateJob:', error);
+        res.status(500).send({error: 'Internal server error', details: error.message});
+    }
+}
 
 
 
@@ -89,6 +126,8 @@ const createJob = async (req, res) => {
 
 module.exports = {
     getUsersJobs,
-    createJob
+    createJob,
+    deleteJob,
+    updateJob
 };
 
