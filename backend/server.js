@@ -2,16 +2,12 @@ const express = require('express');
 require ('dotenv').config();
 const cors = require('cors');
 const prisma = require('./prismaClient');
-
+const rateLimit = require('express-rate-limit');
 
 const getUserJobs = require('./routes/Jobs');
 
-
 // Create express app
 const app = express();
-
-
-
 
 // Configure CORS options
 const corsOptions = {
@@ -22,23 +18,14 @@ const corsOptions = {
 // Middleware
 app.use(express.json());
 app.use(cors(corsOptions));
-// app.use(cookieParser()); // Parse cookies in incoming requests
+
+// Apply rate limiting to all routes
+
+
 
 
 // Routes
 app.use('/api/dashboard', getUserJobs);
-
-
-
-
-
-
-
-
-
-
-
-
 
 // Listen for requests
 const startServer = async () => {

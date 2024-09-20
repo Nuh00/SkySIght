@@ -5,7 +5,6 @@ const prisma = require('../prismaClient');
 
 
 const getUserByEmail = async(email)=>{
-
     const user = await prisma.user.findUnique({
         where:{
             email:email
@@ -16,6 +15,7 @@ const getUserByEmail = async(email)=>{
 }
 
 const getUsersJobs = async (req, res) => {
+    console.log('i should not see this after 2 requests ')
     try {
         console.log('Starting getUsersJobs function');
         const session = req.session; 
