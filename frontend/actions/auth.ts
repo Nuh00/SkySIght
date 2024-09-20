@@ -95,7 +95,7 @@ export const loginWithCreds = async (values: z.infer<typeof LoginSchema>) => {
 
     if (!result) {
       return { error: "Sign-in failed" };
-    }
+    } 
 
     return { success: "Verification email sent" };
   } catch (error) {

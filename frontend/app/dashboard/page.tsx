@@ -7,8 +7,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { AppDispatch, RootState } from "@/state/store";
 import { initialJobs } from "@/state/slice";
 import { useRouter } from "next/navigation";
-import Cookies from 'js-cookie';
 import { useSession } from "next-auth/react";
+import toast from "react-hot-toast";
 
 
 
@@ -53,6 +53,9 @@ function Home() {
 
       const data: Job[] = await response.json(); // initial fetch of jovs
       console.log(`home page rendered user data:`,(data));
+      if (response.status === 429) {
+        toast.error('Too many requests. Please try again later.');
+      }
       if (data) {
         dispatch(initialJobs(data));
       }

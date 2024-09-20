@@ -32,6 +32,14 @@ export const jobSlice = createSlice({
     // Sets the jobs array on initial fetch
     //  ** Sorts the jobs array by applied date first
     initialJobs: (state, action: PayloadAction<Job[]>) => {
+
+      if (!Array.isArray(action.payload)) {
+        console.error('Received non-array payload:', action.payload);
+        state.jobs = []; // Set to empty array if payload is not an array
+        return;
+      }
+      
+      
       state.jobs = action.payload.sort((a, b) => {
         const dateA = parse(
           cleanDate(a.appliedDate),

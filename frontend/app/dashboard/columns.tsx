@@ -25,8 +25,6 @@ import {
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "@/state/store";
 import { deleteJob, updateJob } from "@/state/slice";
-import { use, useState } from "react";
-import { set } from "date-fns";
 
 interface Job {
   id: string;
@@ -57,13 +55,17 @@ export const columns: ColumnDef<Job>[] = [
                 "Content-Type": "application/json",
               },
             });
+            // !! rate limiting
+            if (response.status === 429) {
+              toast.error('Too many requests. Please try again later.');
+            }
 
             if (response.ok) {
               dispatch(deleteJob({ id: jobItem.id }));
               toast.success("Job deleted successfully");
             } else {
-              const data = await response.json();
-              alert(`Failed to delete job: ${data.message}`); //Catch block will not handle this error
+              // const data = await response.json();
+              // alert(`Failed to delete job: ${data.message}`); //Catch block will not handle this error
               // as it is not a network error
             }
           } catch (error) {
@@ -176,17 +178,18 @@ export const columns: ColumnDef<Job>[] = [
             },
             body: JSON.stringify({ status }),
           });
-
+          // !! rate limiting
+          if (response.status === 429) {
+            toast.error('Too many requests. Please try again later.');
+          }
           if (response.ok) {
             const data = await response.json();
             console.log(data);
             dispatch(updateJob(data));
 
             toast.success("Job status updated successfully");
-          } else {
-            const data = await response.json();
-            alert(`Failed to update job status: ${data.message}`);
-          }
+          } 
+          
         } catch (error) {
           toast.error("Failed to update job status");
         }

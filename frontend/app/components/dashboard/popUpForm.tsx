@@ -87,6 +87,7 @@ export const PopUpForm = ({
         body: JSON.stringify({values, session}),
       });
 
+
       if (response.ok) {
         const data = await response.json();
         toast.success("Job created successfully");

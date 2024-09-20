@@ -18,21 +18,10 @@ export const {
 } = NextAuth({
 
   adapter: PrismaAdapter(db),
-  session: { strategy: "jwt" },
-  // callbacks: {
-  //   async signIn(user, account) {
-  //     if (account?.provider !== "credentials") {
-  //       return true;
-  //     }
+  session: { strategy: "jwt",
+    maxAge: 60 * 60 * 24, // 1 day
+   },
 
-  //     const existingUser = await getUserById(user.id ?? "");
-  //     if (!existingUser?.emailVerified) {
-  //       return false;
-  //     }
-
-  //     return true;
-  //   },
-  // },
   providers: [
     Github,
     Google,
