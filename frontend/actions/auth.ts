@@ -7,9 +7,6 @@ import { hash } from "bcryptjs";
 import { signIn, signOut } from "@/auth";
 import { revalidatePath } from "next/cache";
 import { db } from "@/db";
-import { AuthError } from "next-auth";
-import { generateVerificationToken } from "@/lib/token";
-import { sendVerificationEmail } from "@/lib/mail";
 import { redirect } from "next/navigation";
 
 export const login = async (provider: string) => {
@@ -64,8 +61,8 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
   }
 };
 
-
-let RESEND_DELAY = 5 * 60 * 1000; // 5 minutes in milliseconds
+// ?? Make sure user is not able to resend email while one is still pending
+const RESEND_DELAY = 3 * 60 * 1000; // 3 minutes in milliseconds
 export const loginWithCreds = async (values: z.infer<typeof LoginSchema>) => {
   const validatedFields = LoginSchema.safeParse(values);
   
@@ -75,12 +72,30 @@ export const loginWithCreds = async (values: z.infer<typeof LoginSchema>) => {
 
   const { email } = validatedFields.data;
 
+  const user = await getUserByEmail(email);
+
+  if (!user) {
+    return { error: "User not found, please register" };
+  }
+
   const existingToken = await db.verificationToken.findFirst({
     where: { identifier: email },
     orderBy: { expires: 'desc' }
   });
 
-  if (existingToken) {
+  // Potential issue here that was resovled
+// User was denied access to resend email
+// User tries to log in via google or github with same email
+// User fails since email is unverified but google/github allow 1 more resend
+// User resends email and is allowed to login
+// !! Problem: First verification email is still pending
+// !! So if user decides to logout and log back in via email
+// !! User is not allowed to login
+// !! Solution: Check if user.emailVerified is true
+// !! If so, then user can have another verification email sent
+// !! If not, then user must wait for first verification email to expire
+
+  if (existingToken && !user.emailVerified) {
     const now = new Date();
     const tokenExpiry = new Date(existingToken.expires);
     const timeSinceTokenCreation = tokenExpiry.getTime() - now.getTime() - RESEND_DELAY;
@@ -91,7 +106,8 @@ export const loginWithCreds = async (values: z.infer<typeof LoginSchema>) => {
   }
 
   try {
-    const result = await signIn("resend", { email, redirectTo: '/dashboard' });
+    const result = await signIn("resend", { email, redirectTo: '/dashboard',
+     });
 
     if (!result) {
       return { error: "Sign-in failed" };

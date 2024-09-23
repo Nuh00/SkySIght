@@ -2,7 +2,6 @@ import { NextResponse } from "next/server";
 import { db } from "@/db";
 import { auth } from "@/auth";
 import { getUniqueUser } from "@/actions/fetchUserInfo";
-import { cookies } from 'next/headers'
 
 // ** Get request is working
 

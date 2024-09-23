@@ -37,7 +37,7 @@ interface Job {
   link: string;
 }
 
-export const columns: ColumnDef<Job>[] = [
+export const columns: ColumnDef<Job, any>[] = [
   {
     id: "actions",
     cell: ({ row }) => {
