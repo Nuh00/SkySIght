@@ -12,7 +12,7 @@ router.use(authSession);
 
 const initialLoadLimiter = rateLimit({
     windowMs: 15 * 60 * 1000, // 15 minutes
-    max: 12, // More lenient limit for initial page loads (1 per minute on average)
+    max: 16, // More lenient limit for initial page loads (1 per minute on average)
     handler: (req, res) => {
         res.status(429).json({
             error: 'Too Many Requests',

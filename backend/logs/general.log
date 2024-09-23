@@ -1,0 +1,20 @@
+{
+  message: 'POST /api/dashboard - 404.70ms',
+  level: 'info',
+  timestamp: '2024-09-23T17:49:46.668Z'
+}
+{
+  message: 'POST /api/dashboard - 440.88ms',
+  level: 'info',
+  timestamp: '2024-09-23T18:27:41.132Z'
+}
+{
+  message: 'POST /api/dashboard - 102.06ms',
+  level: 'info',
+  timestamp: '2024-09-23T18:32:37.933Z'
+}
+{
+  message: 'POST /api/dashboard/create - 218.11ms',
+  level: 'info',
+  timestamp: '2024-09-23T18:34:15.964Z'
+}

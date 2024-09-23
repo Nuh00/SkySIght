@@ -1,8 +1,9 @@
 const express = require('express');
-require ('dotenv').config();
+require('dotenv').config();
 const cors = require('cors');
 const prisma = require('./prismaClient');
-const rateLimit = require('express-rate-limit');
+const { generalLogger } = require('./utils/logger');
+const requestProfiler = require('./middleware/requestProfiler');
 
 const getUserJobs = require('./routes/Jobs');
 
@@ -12,14 +13,16 @@ const app = express();
 // Configure CORS options
 const corsOptions = {
     origin: 'http://localhost:3000', // Allow requests only from your frontend's origin
-    credentials: true, // Allow cookies and other credentials to be sent
+    credentials: true, 
   };
 
 // Middleware
 app.use(express.json());
 app.use(cors(corsOptions));
+app.use(requestProfiler); // Add this line
 
 // Apply rate limiting to all routes
+
 
 
 

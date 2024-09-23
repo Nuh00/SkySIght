@@ -1,62 +1,48 @@
-const prisma = require('../prismaClient'); 
+const prisma = require('../prismaClient');
+const { readLogger, createLogger, updateLogger, deleteLogger } = require('../utils/logger');
 
+const getUserByEmail = async(email) => {
+    // ?? Start timer for duration measurement
+    const start = process.hrtime();
 
-
-
-
-const getUserByEmail = async(email)=>{
+    // Fetch user by email
     const user = await prisma.user.findUnique({
-        where:{
-            email:email
-        }
+        where: { email: email }
     });
 
+    // Calculate duration and log
+    const end = process.hrtime(start);
+    const duration = (end[0] * 1e9 + end[1]) / 1e6;
+    readLogger.info(`getUserByEmail - ${duration.toFixed(2)}ms`);
     return user;
 }
 
 const getUsersJobs = async (req, res) => {
-    console.log('i should not see this after 2 requests ')
+    // ?? Start timer for duration measurement
+    const start = process.hrtime();
     try {
-        console.log('Starting getUsersJobs function');
-        const session = req.session; 
-        console.log(`session data:`, session);
-
-
+        // !! Log the start of the function
+        readLogger.info('Starting getUsersJobs function');
+        const session = req.body.session;
         const user = await getUserByEmail(session.user.email);
-        console.log(`user data:`, user);
-
-        console.log(`Searching for jobs with userId:`, user.id);
-        
-        // Log all jobs in the database
-        // const allJobs = await prisma.job.findMany();
-        // console.log('All jobs in database:', allJobs);
-
-        // // Log jobs with matching userId (as string)
-        // const jobsWithStringId = allJobs.filter(job => job.userId === user.id);
-        // console.log('Jobs with matching userId (as string):', jobsWithStringId);
-
-        // // Log jobs with matching userId (as ObjectId)
-        // const jobsWithObjectId = allJobs.filter(job => job.userId === new ObjectId(user.id).toString());
-        // console.log('Jobs with matching userId (as ObjectId):', jobsWithObjectId);
-
         const jobs = await prisma.job.findMany({
-            where: {
-                userId: user.id
-            }
+            where: { userId: user.id }
         });
-
-        console.log(`jobs data:`, jobs);
-
-
-        res.status(200).send(jobs);
+        res.status(200).json(jobs);
     } catch (error) {
-        console.error('Error in getUsersJobs:', error);
-        res.status(500).send({error: 'Internal server error', details: error.message});
+        readLogger.error('Error in getUsersJobs:', { error: error.message });
+        res.status(500).json({ error: 'Internal server error', details: error.message });
+    } finally {
+        const end = process.hrtime(start);
+        const duration = (end[0] * 1e9 + end[1]) / 1e6;
+        readLogger.info(`getUsersJobs - Total duration: ${duration.toFixed(2)}ms`);
     }
 }
 
 const createJob = async (req, res) => {
     try {
+        // !! Log the start of the function
+        createLogger.info('Starting createJob function');
         const session = req.session; 
         const user = await getUserByEmail(session.user.email);
         console.log(`user data:`, user);
@@ -77,13 +63,15 @@ const createJob = async (req, res) => {
 
         res.status(201).send(job);
     } catch (error) {
-        console.error('Error in createJob:', error);
+        createLogger.error('Error in createJob:', { error: error.message });
         res.status(500).send({error: 'Internal server error', details: error.message});
     }
 }
 
 const deleteJob = async (req, res) => {
     try {
+        // !! Log the start of the function
+        deleteLogger.info('Starting deleteJob function');
         const {id}  = req.params;
         const job = await prisma.job.delete({
             where: {
@@ -92,37 +80,31 @@ const deleteJob = async (req, res) => {
         });
         res.status(200).send('Job deleted successfully');
     } catch (error) {
-        console.error('Error in deleteJob:', error);
-
-}
-
-
+        deleteLogger.error('Error in deleteJob:', { error: error.message });
+        res.status(500).send({error: 'Internal server error', details: error.message});
+    }
 }
 
 const updateJob = async (req, res) => {
     try {
+        // !! Log the start of the function
+        updateLogger.info('Starting updateJob function');
         const {id} = req.params;
         const {status} = req.body;
         const job = await prisma.job.update({
             where: {
                 id: id
-                
             },
             data: {
                 status: status
             }
-            
         })
         res.status(200).json(job);
     } catch (error) {
-        console.error('Error in updateJob:', error);
+        updateLogger.error('Error in updateJob:', { error: error.message });
         res.status(500).send({error: 'Internal server error', details: error.message});
     }
 }
-
-
-
-
 
 module.exports = {
     getUsersJobs,
@@ -130,4 +112,3 @@ module.exports = {
     deleteJob,
     updateJob
 };
-

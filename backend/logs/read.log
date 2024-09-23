@@ -1,0 +1,50 @@
+{
+  message: 'Starting getUsersJobs function',
+  level: 'info',
+  timestamp: '2024-09-23T17:49:46.274Z'
+}
+{
+  message: 'getUserByEmail - 339.61ms',
+  level: 'info',
+  timestamp: '2024-09-23T17:49:46.616Z'
+}
+{
+  message: 'getUsersJobs - Total duration: 393.36ms',
+  level: 'info',
+  timestamp: '2024-09-23T17:49:46.667Z'
+}
+{
+  message: 'Starting getUsersJobs function',
+  level: 'info',
+  timestamp: '2024-09-23T18:27:40.700Z'
+}
+{
+  message: 'getUserByEmail - 374.34ms',
+  level: 'info',
+  timestamp: '2024-09-23T18:27:41.078Z'
+}
+{
+  message: 'getUsersJobs - Total duration: 431.24ms',
+  level: 'info',
+  timestamp: '2024-09-23T18:27:41.131Z'
+}
+{
+  message: 'Starting getUsersJobs function',
+  level: 'info',
+  timestamp: '2024-09-23T18:32:37.833Z'
+}
+{
+  message: 'getUserByEmail - 50.78ms',
+  level: 'info',
+  timestamp: '2024-09-23T18:32:37.885Z'
+}
+{
+  message: 'getUsersJobs - Total duration: 99.62ms',
+  level: 'info',
+  timestamp: '2024-09-23T18:32:37.933Z'
+}
+{
+  message: 'getUserByEmail - 49.13ms',
+  level: 'info',
+  timestamp: '2024-09-23T18:34:15.796Z'
+}
