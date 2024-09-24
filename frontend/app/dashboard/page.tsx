@@ -10,6 +10,8 @@ import { useSession } from "next-auth/react";
 import toast from "react-hot-toast";
 
 import { ColumnDef } from "@tanstack/react-table";
+import { columns } from "./columns";
+
 
 
 
