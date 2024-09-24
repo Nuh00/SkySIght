@@ -10,6 +10,8 @@ import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import toast from "react-hot-toast";
 
+import { ColumnDef } from "@tanstack/react-table";
+
 
 
 interface Job {
@@ -64,7 +66,7 @@ function Home() {
   return (
     <div className="h-screen w-full dark:text-white text-black  flex flex-col justify-center items-center gap-2">
       {/* <div className="w-[78%] h-[650px] -mt-32"> */}
-      <DataTable columns={columns} data={reduxJobs} />
+      <DataTable columns={columns as ColumnDef<Job, any>[]} data={reduxJobs} />
       {/* </div> */}
     </div>
   );
