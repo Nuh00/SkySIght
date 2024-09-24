@@ -1,8 +1,7 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect} from "react";
 import { DataTable } from "./data-table";
-import { columns } from "./columns";
 import { useSelector, useDispatch } from "react-redux";
 import { AppDispatch, RootState } from "@/state/store";
 import { initialJobs } from "@/state/slice";
