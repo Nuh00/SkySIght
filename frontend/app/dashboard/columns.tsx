@@ -37,60 +37,99 @@ interface Job {
   link: string;
 }
 
+const ActionCell = ({ jobItem }: { jobItem: Job }) => {
+  const dispatch = useDispatch<AppDispatch>();
+
+  const handleDelete = async () => {
+    try {
+      const response = await fetch(`http://localhost:4000/api/dashboard/delete/${jobItem.id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      // !! rate limiting
+      if (response.status === 429) {
+        toast.error('Too many requests. Please try again later.');
+      }
+
+      if (response.ok) {
+        dispatch(deleteJob({ id: jobItem.id }));
+        toast.success("Job deleted successfully");
+      } else {
+        // Error handling...
+      }
+    } catch (error) {
+      toast.error("Failed to delete job");
+    }
+  };
+
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant="ghost" className="h-8 w-8 p-0">
+          <span className="sr-only">Open menu</span>
+          <MoreHorizontal className="h-4 w-4" />
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end">
+        <DropdownMenuLabel>Actions</DropdownMenuLabel>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem className="bg-red-500 hover:bg-red-400" onClick={handleDelete}>Delete</DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
+};
+
+const StatusCell = ({ jobItem }: { jobItem: Job }) => {
+  const dispatch = useDispatch<AppDispatch>();
+
+  const updateStatus = async (status: string) => {
+    try {
+      const response = await fetch(`http://localhost:4000/api/dashboard/update/${jobItem.id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ status }),
+      });
+      if (response.status === 429) {
+        toast.error('Too many requests. Please try again later.');
+      }
+      if (response.ok) {
+        const data = await response.json();
+        dispatch(updateJob(data));
+        toast.success("Job status updated successfully");
+      } 
+    } catch (error) {
+      toast.error("Failed to update job status");
+    }
+  };
+
+  return (
+    <Select
+      value={jobItem.status}
+      onValueChange={(value) => {
+        updateStatus(value);
+      }}
+    >
+      <SelectTrigger>
+        <SelectValue>{jobItem.status}</SelectValue>
+      </SelectTrigger>
+      <SelectContent>
+        <SelectItem className="text-green-400" value="Accepted">Accepted</SelectItem>
+        <SelectItem className="text-red-500" value="Rejected">Rejected</SelectItem>
+        <SelectItem className="text-yellow-600" value="Pending">Pending</SelectItem>
+        <SelectItem className="text-gray-400" value="Ghosted">Ghosted</SelectItem>
+      </SelectContent>
+    </Select>
+  );
+};
+
 export const columns: ColumnDef<Job, any>[] = [
   {
     id: "actions",
-    cell: ({ row }) => {
-      const jobItem = row.original;
-      const dispatch = useDispatch<AppDispatch>();
-
-      {
-        /* <DropdownMenu> */
-      }
-      const handleDelete = async () => {
-          try {
-            const response = await fetch(`http://localhost:4000/api/dashboard/delete/${jobItem.id}`, {
-              method: "DELETE",
-              headers: {
-                "Content-Type": "application/json",
-              },
-            });
-            // !! rate limiting
-            if (response.status === 429) {
-              toast.error('Too many requests. Please try again later.');
-            }
-
-            if (response.ok) {
-              dispatch(deleteJob({ id: jobItem.id }));
-              toast.success("Job deleted successfully");
-            } else {
-              // const data = await response.json();
-              // alert(`Failed to delete job: ${data.message}`); //Catch block will not handle this error
-              // as it is not a network error
-            }
-          } catch (error) {
-            toast.error("Failed to delete job");
-          }
-        
-      };
-
-      return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Open menu</span>
-              <MoreHorizontal className="h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            {/* <DropdownMenuItem>Edit</DropdownMenuItem> */}
-            <DropdownMenuSeparator />
-            <DropdownMenuItem className="hover: text-red-500" onClick={handleDelete}>Delete</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      );
-    },
+    cell: ({ row }) => <ActionCell jobItem={row.original} />,
   },
   {
     // header: () => (
@@ -166,61 +205,7 @@ export const columns: ColumnDef<Job, any>[] = [
     accessorKey: "status",
 
     cell: ({ row }) => {
-      const jobItem = row.original; // Extract the row's original data
-      const dispatch = useDispatch<AppDispatch>(); // Rewrite the local state
-
-      const updateStatus = async (status: string) => {
-        try {
-          const response = await fetch(`http://localhost:4000/api/dashboard/update/${jobItem.id}`, {
-            method: "PATCH",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ status }),
-          });
-          // !! rate limiting
-          if (response.status === 429) {
-            toast.error('Too many requests. Please try again later.');
-          }
-          if (response.ok) {
-            const data = await response.json();
-            console.log(data);
-            dispatch(updateJob(data));
-
-            toast.success("Job status updated successfully");
-          } 
-          
-        } catch (error) {
-          toast.error("Failed to update job status");
-        }
-      };
-
-      return (
-        <Select
-          value={jobItem.status}
-          onValueChange={(value) => {
-            updateStatus(value);
-          }}
-        >
-          <SelectTrigger>
-            <SelectValue>{jobItem.status}</SelectValue>
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem className="text-green-400" value="Accepted">
-              Accepted
-            </SelectItem>
-            <SelectItem className="text-red-500" value="Rejected">
-              Rejected
-            </SelectItem>
-            <SelectItem className="text-yellow-600" value="Pending">
-              Pending
-            </SelectItem>
-            <SelectItem className="text-gray-400" value="Ghosted">
-              Ghosted
-            </SelectItem>
-          </SelectContent>
-        </Select>
-      );
+      return <StatusCell jobItem={row.original} />;
     },
   },
   {
