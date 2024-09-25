@@ -42,7 +42,7 @@ const ActionCell = ({ jobItem }: { jobItem: Job }) => {
 
   const handleDelete = async () => {
     try {
-      const response = await fetch(`http://localhost:4000/api/dashboard/delete/${jobItem.id}`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/dashboard/delete/${jobItem.id}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
@@ -86,7 +86,7 @@ const StatusCell = ({ jobItem }: { jobItem: Job }) => {
 
   const updateStatus = async (status: string) => {
     try {
-      const response = await fetch(`http://localhost:4000/api/dashboard/update/${jobItem.id}`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/dashboard/update/${jobItem.id}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
