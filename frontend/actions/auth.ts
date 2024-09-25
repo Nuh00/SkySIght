@@ -32,12 +32,14 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
   }
 
   // Create user
-  console.log('about to create user')
+  console.log("about to create user");
   try {
     const { name, email, password } = validatedFields.data;
     // Hash password
 
     const hashedPassword = await hash(password, 10);
+
+    console.log("about to check if user exists");
 
     const existingUser = await getUserByEmail(email);
 
@@ -45,7 +47,7 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
       return { error: "User already exists" };
     }
 
-    console.log('about to create user in db')
+    console.log("about to create user in db");
 
     const user = await db.user.create({
       data: {
@@ -55,7 +57,7 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
       },
     });
 
-    console.log('user created in db')
+    console.log("user created in db");
 
     // const verificationToken = await generateVerificationToken(email);
     // await sendVerificationEmail(email, verificationToken.token);
@@ -70,7 +72,7 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
 const RESEND_DELAY = 3 * 60 * 1000; // 3 minutes in milliseconds
 export const loginWithCreds = async (values: z.infer<typeof LoginSchema>) => {
   const validatedFields = LoginSchema.safeParse(values);
-  
+
   if (!validatedFields.success) {
     return { error: "Invalid fields" };
   }
@@ -85,42 +87,44 @@ export const loginWithCreds = async (values: z.infer<typeof LoginSchema>) => {
 
   const existingToken = await db.verificationToken.findFirst({
     where: { identifier: email },
-    orderBy: { expires: 'desc' }
+    orderBy: { expires: "desc" },
   });
 
   // Potential issue here that was resovled
-// User was denied access to resend email
-// User tries to log in via google or github with same email
-// User fails since email is unverified but google/github allow 1 more resend
-// User resends email and is allowed to login
-// !! Problem: First verification email is still pending
-// !! So if user decides to logout and log back in via email
-// !! User is not allowed to login
-// !! Solution: Check if user.emailVerified is true
-// !! If so, then user can have another verification email sent
-// !! If not, then user must wait for first verification email to expire
+  // User was denied access to resend email
+  // User tries to log in via google or github with same email
+  // User fails since email is unverified but google/github allow 1 more resend
+  // User resends email and is allowed to login
+  // !! Problem: First verification email is still pending
+  // !! So if user decides to logout and log back in via email
+  // !! User is not allowed to login
+  // !! Solution: Check if user.emailVerified is true
+  // !! If so, then user can have another verification email sent
+  // !! If not, then user must wait for first verification email to expire
 
   if (existingToken && !user.emailVerified) {
     const now = new Date();
     const tokenExpiry = new Date(existingToken.expires);
-    const timeSinceTokenCreation = tokenExpiry.getTime() - now.getTime() - RESEND_DELAY;
+    const timeSinceTokenCreation =
+      tokenExpiry.getTime() - now.getTime() - RESEND_DELAY;
 
     if (timeSinceTokenCreation > 0) {
-      return { warning: "Verification email already sent. Please check your inbox or spam folder." };
+      return {
+        warning:
+          "Verification email already sent. Please check your inbox or spam folder.",
+      };
     }
   }
 
   try {
-    const result = await signIn("resend", { email, redirectTo: '/dashboard',
-     });
+    const result = await signIn("resend", { email, redirectTo: "/dashboard" });
 
     if (!result) {
       return { error: "Sign-in failed" };
-    } 
+    }
 
     return { success: "Verification email sent" };
   } catch (error) {
-
     // !! This is not actually an error, but a redirect since waiting for user to verify email
     if (error instanceof Error && error.message === "NEXT_REDIRECT") {
       // This is not actually an error, but a redirect
