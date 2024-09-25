@@ -32,6 +32,7 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
   }
 
   // Create user
+  console.log('about to create user')
   try {
     const { name, email, password } = validatedFields.data;
     // Hash password
@@ -44,6 +45,8 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
       return { error: "User already exists" };
     }
 
+    console.log('about to create user in db')
+
     const user = await db.user.create({
       data: {
         name,
@@ -51,6 +54,8 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
         password: hashedPassword,
       },
     });
+
+    console.log('user created in db')
 
     // const verificationToken = await generateVerificationToken(email);
     // await sendVerificationEmail(email, verificationToken.token);
