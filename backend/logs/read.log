@@ -48,3 +48,38 @@
   level: 'info',
   timestamp: '2024-09-23T18:34:15.796Z'
 }
+{
+  message: 'Starting getUsersJobs function',
+  level: 'info',
+  timestamp: '2024-09-24T23:56:24.548Z'
+}
+{
+  message: 'Starting getUsersJobs function',
+  level: 'info',
+  timestamp: '2024-09-24T23:56:24.555Z'
+}
+{
+  message: 'getUserByEmail - 317.76ms',
+  level: 'info',
+  timestamp: '2024-09-24T23:56:24.873Z'
+}
+{
+  message: 'getUserByEmail - 361.11ms',
+  level: 'info',
+  timestamp: '2024-09-24T23:56:24.911Z'
+}
+{
+  message: 'getUsersJobs - Total duration: 372.74ms',
+  level: 'info',
+  timestamp: '2024-09-24T23:56:24.928Z'
+}
+{
+  message: 'getUsersJobs - Total duration: 413.65ms',
+  level: 'info',
+  timestamp: '2024-09-24T23:56:24.961Z'
+}
+{
+  message: 'getUserByEmail - 55.75ms',
+  level: 'info',
+  timestamp: '2024-09-24T23:56:52.482Z'
+}

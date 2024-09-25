@@ -1,34 +1,29 @@
-const express = require('express');
-require('dotenv').config();
-const cors = require('cors');
-const prisma = require('./prismaClient');
-const { generalLogger } = require('./utils/logger');
-const requestProfiler = require('./middleware/requestProfiler');
+const express = require("express");
+require("dotenv").config();
+const cors = require("cors");
+const prisma = require("./prismaClient");
+const requestProfiler = require("./middleware/requestProfiler");
+const helmet = require("helmet");
 
-const getUserJobs = require('./routes/Jobs');
+const getUserJobs = require("./routes/Jobs");
 
 // Create express app
 const app = express();
+app.use(helmet());
 
 // Configure CORS options
 const corsOptions = {
-    origin: 'http://localhost:3000', // Allow requests only from your frontend's origin
+    origin: process.env.FRONTEND_URL || 'https://your-frontend-domain.com', // Update this with your Vercel-hosted frontend URL
     credentials: true, 
-  };
+};
 
 // Middleware
 app.use(express.json());
 app.use(cors(corsOptions));
 app.use(requestProfiler); // Add this line
 
-// Apply rate limiting to all routes
-
-
-
-
-
 // Routes
-app.use('/api/dashboard', getUserJobs);
+app.use("/api/dashboard", getUserJobs);
 
 // Listen for requests
 const startServer = async () => {

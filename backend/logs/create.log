@@ -8,3 +8,8 @@
   level: 'info',
   timestamp: '2024-09-23T18:34:15.746Z'
 }
+{
+  message: 'Starting createJob function',
+  level: 'info',
+  timestamp: '2024-09-24T23:56:52.425Z'
+}
