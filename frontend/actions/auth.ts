@@ -6,7 +6,7 @@ import { hash } from "bcryptjs";
 
 import { signIn, signOut } from "@/auth";
 import { revalidatePath } from "next/cache";
-import { db } from "@/db";
+import { prisma } from "@/db";
 import { redirect } from "next/navigation";
 
 export const login = async (provider: string) => {
@@ -49,7 +49,7 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
 
     console.log("about to create user in db");
 
-    const user = await db.user.create({
+    const user = await prisma.user.create({
       data: {
         name,
         email,
@@ -85,7 +85,7 @@ export const loginWithCreds = async (values: z.infer<typeof LoginSchema>) => {
     return { error: "User not found, please register" };
   }
 
-  const existingToken = await db.verificationToken.findFirst({
+  const existingToken = await prisma.verificationToken.findFirst({
     where: { identifier: email },
     orderBy: { expires: "desc" },
   });
