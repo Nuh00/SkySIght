@@ -3,10 +3,9 @@
 // declare global {
 //   var prisma: PrismaClient | undefined;
 // }
-// export const db = global.prisma || new PrismaClient();                  
+// export const db = global.prisma || new PrismaClient();
 
 // if (process.env.NODE_ENV !== "production") global.prisma = db;
-
 
 // ... existing code ...
 import { PrismaClient } from "@prisma/client";
@@ -29,4 +28,4 @@ db.$connect()
     console.error("Failed to connect to the database:", error)
   );
 
-export default db;
+export { db };
