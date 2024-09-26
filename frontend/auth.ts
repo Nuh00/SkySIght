@@ -5,7 +5,7 @@ import Google from "next-auth/providers/google";
 import Resend from "next-auth/providers/resend";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import Credentials from "next-auth/providers/credentials";
-import { db } from "@/db";
+import { prisma } from "@/db";
 
 export const {
   handlers: { GET, POST },
@@ -13,7 +13,7 @@ export const {
   signOut,
   auth,
 } = NextAuth({
-  adapter: PrismaAdapter(db),
+  adapter: PrismaAdapter(prisma),
   session: {
     strategy: "jwt",
     maxAge: 60 * 60 * 24, // 1 day
