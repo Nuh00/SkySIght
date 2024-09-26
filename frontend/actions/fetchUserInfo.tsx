@@ -1,10 +1,10 @@
 "use server";
 
-import { db } from "@/db";
+import { prisma } from "@/db";
 import { NextResponse } from "next/server";
 
 export const getUniqueUser = async (email: string) => {
-  const user = await db.user.findUnique({
+  const user = await prisma.user.findUnique({
     where: {
       email,
     },
@@ -21,7 +21,7 @@ export const getUniqueUser = async (email: string) => {
 
 export const getUserJobs = async (userId: string) => {
   try {
-    const jobs = await db.job.findMany({
+    const jobs = await prisma.job.findMany({
       where: {
         userId,
       },
