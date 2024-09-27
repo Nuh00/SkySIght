@@ -1,7 +1,5 @@
 import { z } from "zod";
 
-
-
 export const LoginSchema = z.object({
   email: z.string().email(),
   // password: z.string().min(6, {
@@ -37,6 +35,9 @@ export const createJobSchema = z.object({
     })
     .max(1000000000, {
       message: "Send me some money",
+    }),
+    status: z.string().min(2, {
+      message: "Status is required",
     }),
 
   appliedDate: z.string().optional(),

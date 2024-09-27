@@ -57,7 +57,7 @@ export const PopUpForm = ({
   const [success, setSuccess] = useState<string | undefined>(undefined);
 
   const dispatch = useDispatch<AppDispatch>(); // dispatch to redux store
-  const { data: session } = useSession(); // ?? No way this is all I need to get the user session data  
+  const { data: session } = useSession(); // ?? No way this is all I need to get the user session data
 
   const form = useForm<z.infer<typeof createJobSchema>>({
     resolver: zodResolver(createJobSchema),
@@ -79,14 +79,16 @@ export const PopUpForm = ({
     startTransition(async () => {
       console.log(values);
 
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/dashboard/create`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({values, session}),
-      });
-
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/dashboard/create`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ values, session }),
+        }
+      );
 
       if (response.ok) {
         const data = await response.json();
