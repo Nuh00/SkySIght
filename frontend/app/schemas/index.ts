@@ -1,5 +1,6 @@
-import { link } from "fs";
-import * as z from "zod";
+import { z } from "zod";
+
+
 
 export const LoginSchema = z.object({
   email: z.string().email(),
@@ -28,12 +29,16 @@ export const createJobSchema = z.object({
   location: z.string().min(2, {
     message: "Location is required",
   }),
-  salary: z.coerce.number().min(1, {
-    message: "Salary is required",
-  }),
-  status: z.string().min(2, {
-    message: "Status is required",
-  }),
+  salary: z.coerce
+    .number()
+    .int()
+    .min(3, {
+      message: "Salary is required",
+    })
+    .max(1000000000, {
+      message: "Send me some money",
+    }),
+
   appliedDate: z.string().optional(),
   link: z.string().min(2, {}).optional(),
 });

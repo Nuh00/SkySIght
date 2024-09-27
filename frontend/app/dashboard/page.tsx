@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useEffect} from "react";
+import { formatSalary } from "@/utils/formatSalary";
+import React, { useEffect } from "react";
 import { DataTable } from "./data-table";
 import { useSelector, useDispatch } from "react-redux";
 import { AppDispatch, RootState } from "@/state/store";
@@ -12,9 +13,6 @@ import toast from "react-hot-toast";
 import { ColumnDef } from "@tanstack/react-table";
 import { columns } from "./columns";
 
-
-
-
 interface Job {
   id: string;
   title: string;
@@ -25,34 +23,33 @@ interface Job {
   appliedDate: string;
 }
 
-
 function Home() {
   const reduxJobs = useSelector((state: RootState) => state.counter.jobs);
   const dispatch = useDispatch<AppDispatch>();
-  const router = useRouter();
-  const { data: session } = useSession(); // ?? No way this is all I need to get the user session data  
+  const { data: session } = useSession(); // ?? No way this is all I need to get the user session data
 
-  console.log(`home page rendered user session data:`,(session));
-
-
-
+  console.log(`home page rendered user session data:`, session);
 
   useEffect(() => {
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
+    console.log(`home page rendered api url:`, apiUrl);
     const fetchData = async () => {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/dashboard`, {
-        method: 'POST',
+      const response = await fetch(`${apiUrl}/api/dashboard`, {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ session }),
+      });
 
-      },
-      body: JSON.stringify({session}),
-      }
-    );
+      console.log(`home page rendered response:`, response);
 
-      const data: Job[] = await response.json(); // initial fetch of jovs
-      console.log(`home page rendered user data:`,(data));
+      const data: Job[] = await response.json();
+      console.log("Raw job data from API:", data);
+
+   
       if (response.status === 429) {
-        toast.error('Too many requests. Please try again later.');
+        toast.error("Too many requests. Please try again later.");
       }
       if (data) {
         dispatch(initialJobs(data));
@@ -60,7 +57,7 @@ function Home() {
     };
 
     fetchData();
-  }, [dispatch]);
+  }, [dispatch, session]);
 
   console.log(reduxJobs);
 

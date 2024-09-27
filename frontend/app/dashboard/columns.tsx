@@ -25,6 +25,7 @@ import {
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "@/state/store";
 import { deleteJob, updateJob } from "@/state/slice";
+import { formatSalary } from "@/utils/formatSalary";
 
 interface Job {
   id: string;
@@ -42,15 +43,18 @@ const ActionCell = ({ jobItem }: { jobItem: Job }) => {
 
   const handleDelete = async () => {
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/dashboard/delete/${jobItem.id}`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/dashboard/delete/${jobItem.id}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
       // !! rate limiting
       if (response.status === 429) {
-        toast.error('Too many requests. Please try again later.');
+        toast.error("Too many requests. Please try again later.");
       }
 
       if (response.ok) {
@@ -75,7 +79,12 @@ const ActionCell = ({ jobItem }: { jobItem: Job }) => {
       <DropdownMenuContent align="end">
         <DropdownMenuLabel>Actions</DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuItem className="bg-red-500 hover:bg-red-400" onClick={handleDelete}>Delete</DropdownMenuItem>
+        <DropdownMenuItem
+          className="bg-red-500 hover:bg-red-400"
+          onClick={handleDelete}
+        >
+          Delete
+        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );
@@ -86,21 +95,24 @@ const StatusCell = ({ jobItem }: { jobItem: Job }) => {
 
   const updateStatus = async (status: string) => {
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/dashboard/update/${jobItem.id}`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ status }),
-      });
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/dashboard/update/${jobItem.id}`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ status }),
+        }
+      );
       if (response.status === 429) {
-        toast.error('Too many requests. Please try again later.');
+        toast.error("Too many requests. Please try again later.");
       }
       if (response.ok) {
         const data = await response.json();
         dispatch(updateJob(data));
         toast.success("Job status updated successfully");
-      } 
+      }
     } catch (error) {
       toast.error("Failed to update job status");
     }
@@ -117,10 +129,18 @@ const StatusCell = ({ jobItem }: { jobItem: Job }) => {
         <SelectValue>{jobItem.status}</SelectValue>
       </SelectTrigger>
       <SelectContent>
-        <SelectItem className="text-green-400" value="Accepted">Accepted</SelectItem>
-        <SelectItem className="text-red-500" value="Rejected">Rejected</SelectItem>
-        <SelectItem className="text-yellow-600" value="Pending">Pending</SelectItem>
-        <SelectItem className="text-gray-400" value="Ghosted">Ghosted</SelectItem>
+        <SelectItem className="text-green-400" value="Accepted">
+          Accepted
+        </SelectItem>
+        <SelectItem className="text-red-500" value="Rejected">
+          Rejected
+        </SelectItem>
+        <SelectItem className="text-yellow-600" value="Pending">
+          Pending
+        </SelectItem>
+        <SelectItem className="text-gray-400" value="Ghosted">
+          Ghosted
+        </SelectItem>
       </SelectContent>
     </Select>
   );
@@ -188,12 +208,10 @@ export const columns: ColumnDef<Job, any>[] = [
     accessorKey: "salary",
     cell: ({ row }) => {
       const salary = row.getValue("salary");
-      return (
-        <div className="font-bold">
-          {salary as number}
-          <span>K</span>{" "}
-        </div>
-      );
+      console.log("Raw salary value:", salary, "Type:", typeof salary);
+      const formattedSalary = formatSalary(Number(salary));
+      console.log("Formatted salary:", formattedSalary);
+      return <div className="font-bold">{formattedSalary}</div>;
     },
   },
   {
