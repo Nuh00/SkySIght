@@ -14,18 +14,22 @@ app.use(helmet());
 // Configure CORS options
 
 
+const allowedOrigins = [
+  "http://localhost:3000", // Localhost for development
+  "https://www.skysight.app", // Production URL
+];
+
+// Configure CORS options
 const corsOptions = {
   origin: function (origin, callback) {
-    const allowedOrigin = process.env.FRONTEND_URL || "http://localhost:3000";
-    console.log("Request origin:", origin);
-    console.log("Allowed origin:", allowedOrigin);
-    if (!origin || origin === allowedOrigin) {
-      callback(null, true);
+    // If origin is in allowedOrigins or there's no origin (non-browser requests)
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true); // Allow the request
     } else {
-      callback(new Error("Not allowed by CORS"));
+      callback(new Error("Not allowed by CORS")); // Block the request
     }
   },
-  credentials: true,
+  credentials: true, // Allow credentials like cookies
 };
 
 // Middleware
