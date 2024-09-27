@@ -12,9 +12,20 @@ const app = express();
 app.use(helmet());
 
 // Configure CORS options
+
+
 const corsOptions = {
-    origin: process.env.FRONTEND_URL || 'https://your-frontend-domain.com', // Update this with your Vercel-hosted frontend URL
-    credentials: true, 
+  origin: function (origin, callback) {
+    const allowedOrigin = process.env.FRONTEND_URL || "http://localhost:3000";
+    console.log("Request origin:", origin);
+    console.log("Allowed origin:", allowedOrigin);
+    if (!origin || origin === allowedOrigin) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  credentials: true,
 };
 
 // Middleware
@@ -27,21 +38,21 @@ app.use("/api/dashboard", getUserJobs);
 
 // Listen for requests
 const startServer = async () => {
-    try {
-      // Ensure that the Prisma client connects to the database
-      await prisma.$connect();
-      console.log('Connected to the database');
-  
-      // Start the server only after a successful connection to the database
-      const PORT = process.env.PORT || 4000;
-      app.listen(PORT, () => {
-        console.log(`Server is running on port ${PORT}`);
-      });
-    } catch (error) {
-      console.error('Failed to connect to the database:', error);
-      process.exit(1); // Exit the process with a failure code
-    }
-  };
-  
-  // Call the function to start the server
-  startServer();
+  try {
+    // Ensure that the Prisma client connects to the database
+    await prisma.$connect();
+    console.log("Connected to the database");
+
+    // Start the server only after a successful connection to the database
+    const PORT = process.env.PORT || 4000;
+    app.listen(PORT, () => {
+      console.log(`Server is running on port ${PORT}`);
+    });
+  } catch (error) {
+    console.error("Failed to connect to the database:", error);
+    process.exit(1); // Exit the process with a failure code
+  }
+};
+
+// Call the function to start the server
+startServer();

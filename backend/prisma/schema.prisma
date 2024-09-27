@@ -110,4 +110,3 @@ model Authenticator {
  
   @@unique([userId, credentialID])
 }
-
