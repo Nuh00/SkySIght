@@ -30,11 +30,11 @@ export const createJobSchema = z.object({
   salary: z.coerce
     .number()
     .int()
-    .min(3, {
-      message: "Salary is required",
+    .min(1000, {
+      message: "Salary must be at least 1,000",
     })
     .max(1000000000, {
-      message: "Send me some money",
+      message: "Salary must be less than 1 billion",
     }),
     status: z.string().min(2, {
       message: "Status is required",

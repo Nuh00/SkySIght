@@ -47,7 +47,6 @@ function Home() {
       const data: Job[] = await response.json();
       console.log("Raw job data from API:", data);
 
-   
       if (response.status === 429) {
         toast.error("Too many requests. Please try again later.");
       }

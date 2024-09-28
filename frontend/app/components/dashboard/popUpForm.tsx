@@ -272,7 +272,7 @@ export const PopUpForm = ({
                       control={form.control}
                       name="appliedDate"
                       render={({ field }) => (
-                        <FormItem className="flex flex-col">
+                        <FormItem className="flex flex-col ">
                           <FormLabel>Date</FormLabel>
                           <FormControl>
                             <Popover>
@@ -284,12 +284,12 @@ export const PopUpForm = ({
                                     // !date && "text-muted-foreground"
                                   )}
                                 >
-                                  <CalendarIcon className="mr-2 h-4 w-4" />
-                                  {date ? (
-                                    format(date, "PPP")
-                                  ) : (
-                                    <span>Pick a date</span>
-                                  )}
+                                  <CalendarIcon className="mr-2 h-4 w-4 flex-shrink-0" />
+                                  <span className="truncate">
+                                    {date
+                                      ? format(date, "MMM d, yyyy")
+                                      : "Pick a date"}
+                                  </span>
                                 </Button>
                               </PopoverTrigger>
                               <PopoverContent
