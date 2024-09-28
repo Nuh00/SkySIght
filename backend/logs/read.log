@@ -353,3 +353,318 @@
   level: 'info',
   timestamp: '2024-09-27T21:16:50.378Z'
 }
+{
+  message: 'Starting getUsersJobs function',
+  level: 'info',
+  timestamp: '2024-09-28T01:05:40.179Z'
+}
+{
+  message: 'Starting getUsersJobs function',
+  level: 'info',
+  timestamp: '2024-09-28T01:05:40.183Z'
+}
+{
+  message: 'getUserByEmail - 347.95ms',
+  level: 'info',
+  timestamp: '2024-09-28T01:05:40.528Z'
+}
+{
+  message: 'getUserByEmail - 384.52ms',
+  level: 'info',
+  timestamp: '2024-09-28T01:05:40.568Z'
+}
+{
+  message: 'getUsersJobs - Total duration: 409.47ms',
+  level: 'info',
+  timestamp: '2024-09-28T01:05:40.588Z'
+}
+{
+  message: 'getUsersJobs - Total duration: 445.42ms',
+  level: 'info',
+  timestamp: '2024-09-28T01:05:40.629Z'
+}
+{
+  message: 'Starting getUsersJobs function',
+  level: 'info',
+  timestamp: '2024-09-28T01:05:40.798Z'
+}
+{
+  message: 'getUserByEmail - 48.67ms',
+  level: 'info',
+  timestamp: '2024-09-28T01:05:40.848Z'
+}
+{
+  message: 'getUsersJobs - Total duration: 102.11ms',
+  level: 'info',
+  timestamp: '2024-09-28T01:05:40.900Z'
+}
+{
+  message: 'Starting getUsersJobs function',
+  level: 'info',
+  timestamp: '2024-09-28T01:06:39.846Z'
+}
+{
+  message: 'getUserByEmail - 58.87ms',
+  level: 'info',
+  timestamp: '2024-09-28T01:06:39.905Z'
+}
+{
+  message: 'getUsersJobs - Total duration: 110.98ms',
+  level: 'info',
+  timestamp: '2024-09-28T01:06:39.957Z'
+}
+{
+  message: 'Starting getUsersJobs function',
+  level: 'info',
+  timestamp: '2024-09-28T01:06:54.177Z'
+}
+{
+  message: 'getUserByEmail - 54.05ms',
+  level: 'info',
+  timestamp: '2024-09-28T01:06:54.232Z'
+}
+{
+  message: 'getUsersJobs - Total duration: 105.19ms',
+  level: 'info',
+  timestamp: '2024-09-28T01:06:54.283Z'
+}
+{
+  message: 'Starting getUsersJobs function',
+  level: 'info',
+  timestamp: '2024-09-28T01:07:00.707Z'
+}
+{
+  message: 'getUserByEmail - 53.73ms',
+  level: 'info',
+  timestamp: '2024-09-28T01:07:00.761Z'
+}
+{
+  message: 'getUsersJobs - Total duration: 109.42ms',
+  level: 'info',
+  timestamp: '2024-09-28T01:07:00.816Z'
+}
+{
+  message: 'Starting getUsersJobs function',
+  level: 'info',
+  timestamp: '2024-09-28T01:07:16.307Z'
+}
+{
+  message: 'getUserByEmail - 63.34ms',
+  level: 'info',
+  timestamp: '2024-09-28T01:07:16.371Z'
+}
+{
+  message: 'getUsersJobs - Total duration: 119.13ms',
+  level: 'info',
+  timestamp: '2024-09-28T01:07:16.426Z'
+}
+{
+  message: 'Starting getUsersJobs function',
+  level: 'info',
+  timestamp: '2024-09-28T01:09:54.930Z'
+}
+{
+  message: 'getUserByEmail - 54.86ms',
+  level: 'info',
+  timestamp: '2024-09-28T01:09:54.986Z'
+}
+{
+  message: 'getUsersJobs - Total duration: 127.31ms',
+  level: 'info',
+  timestamp: '2024-09-28T01:09:55.058Z'
+}
+{
+  message: 'Starting getUsersJobs function',
+  level: 'info',
+  timestamp: '2024-09-28T01:10:10.483Z'
+}
+{
+  message: 'getUserByEmail - 56.28ms',
+  level: 'info',
+  timestamp: '2024-09-28T01:10:10.540Z'
+}
+{
+  message: 'getUsersJobs - Total duration: 108.89ms',
+  level: 'info',
+  timestamp: '2024-09-28T01:10:10.592Z'
+}
+{
+  message: 'Starting getUsersJobs function',
+  level: 'info',
+  timestamp: '2024-09-28T01:11:34.456Z'
+}
+{
+  message: 'getUserByEmail - 54.58ms',
+  level: 'info',
+  timestamp: '2024-09-28T01:11:34.511Z'
+}
+{
+  message: 'getUsersJobs - Total duration: 105.85ms',
+  level: 'info',
+  timestamp: '2024-09-28T01:11:34.561Z'
+}
+{
+  message: 'Starting getUsersJobs function',
+  level: 'info',
+  timestamp: '2024-09-28T01:11:37.739Z'
+}
+{
+  message: 'Starting getUsersJobs function',
+  level: 'info',
+  timestamp: '2024-09-28T01:11:37.744Z'
+}
+{
+  message: 'Starting getUsersJobs function',
+  level: 'info',
+  timestamp: '2024-09-28T01:11:37.788Z'
+}
+{
+  message: 'getUserByEmail - 51.94ms',
+  level: 'info',
+  timestamp: '2024-09-28T01:11:37.792Z'
+}
+{
+  message: 'getUserByEmail - 54.08ms',
+  level: 'info',
+  timestamp: '2024-09-28T01:11:37.799Z'
+}
+{
+  message: 'getUsersJobs - Total duration: 106.30ms',
+  level: 'info',
+  timestamp: '2024-09-28T01:11:37.846Z'
+}
+{
+  message: 'getUsersJobs - Total duration: 103.01ms',
+  level: 'info',
+  timestamp: '2024-09-28T01:11:37.847Z'
+}
+{
+  message: 'getUserByEmail - 392.96ms',
+  level: 'info',
+  timestamp: '2024-09-28T01:11:38.182Z'
+}
+{
+  message: 'getUsersJobs - Total duration: 450.52ms',
+  level: 'info',
+  timestamp: '2024-09-28T01:11:38.239Z'
+}
+{
+  message: 'Starting getUsersJobs function',
+  level: 'info',
+  timestamp: '2024-09-28T01:55:14.196Z'
+}
+{
+  message: 'getUserByEmail - 359.91ms',
+  level: 'info',
+  timestamp: '2024-09-28T01:55:14.557Z'
+}
+{
+  message: 'getUsersJobs - Total duration: 426.01ms',
+  level: 'info',
+  timestamp: '2024-09-28T01:55:14.622Z'
+}
+{
+  message: 'Starting getUsersJobs function',
+  level: 'info',
+  timestamp: '2024-09-28T01:55:49.331Z'
+}
+{
+  message: 'getUserByEmail - 54.60ms',
+  level: 'info',
+  timestamp: '2024-09-28T01:55:49.387Z'
+}
+{
+  message: 'getUsersJobs - Total duration: 109.12ms',
+  level: 'info',
+  timestamp: '2024-09-28T01:55:49.441Z'
+}
+{
+  message: 'Starting getUsersJobs function',
+  level: 'info',
+  timestamp: '2024-09-28T01:57:47.612Z'
+}
+{
+  message: 'Starting getUsersJobs function',
+  level: 'info',
+  timestamp: '2024-09-28T01:57:47.614Z'
+}
+{
+  message: 'Starting getUsersJobs function',
+  level: 'info',
+  timestamp: '2024-09-28T01:57:47.635Z'
+}
+{
+  message: 'getUserByEmail - 60.09ms',
+  level: 'info',
+  timestamp: '2024-09-28T01:57:47.673Z'
+}
+{
+  message: 'getUsersJobs - Total duration: 107.19ms',
+  level: 'info',
+  timestamp: '2024-09-28T01:57:47.719Z'
+}
+{
+  message: 'getUserByEmail - 409.12ms',
+  level: 'info',
+  timestamp: '2024-09-28T01:57:48.044Z'
+}
+{
+  message: 'getUserByEmail - 436.33ms',
+  level: 'info',
+  timestamp: '2024-09-28T01:57:48.051Z'
+}
+{
+  message: 'getUsersJobs - Total duration: 471.50ms',
+  level: 'info',
+  timestamp: '2024-09-28T01:57:48.106Z'
+}
+{
+  message: 'getUsersJobs - Total duration: 500.65ms',
+  level: 'info',
+  timestamp: '2024-09-28T01:57:48.115Z'
+}
+{
+  message: 'Starting getUsersJobs function',
+  level: 'info',
+  timestamp: '2024-09-28T01:58:25.604Z'
+}
+{
+  message: 'Starting getUsersJobs function',
+  level: 'info',
+  timestamp: '2024-09-28T01:58:25.608Z'
+}
+{
+  message: 'Starting getUsersJobs function',
+  level: 'info',
+  timestamp: '2024-09-28T01:58:25.632Z'
+}
+{
+  message: 'getUserByEmail - 52.44ms',
+  level: 'info',
+  timestamp: '2024-09-28T01:58:25.657Z'
+}
+{
+  message: 'getUserByEmail - 53.91ms',
+  level: 'info',
+  timestamp: '2024-09-28T01:58:25.663Z'
+}
+{
+  message: 'getUserByEmail - 59.90ms',
+  level: 'info',
+  timestamp: '2024-09-28T01:58:25.692Z'
+}
+{
+  message: 'getUsersJobs - Total duration: 105.45ms',
+  level: 'info',
+  timestamp: '2024-09-28T01:58:25.709Z'
+}
+{
+  message: 'getUsersJobs - Total duration: 106.15ms',
+  level: 'info',
+  timestamp: '2024-09-28T01:58:25.714Z'
+}
+{
+  message: 'getUsersJobs - Total duration: 116.06ms',
+  level: 'info',
+  timestamp: '2024-09-28T01:58:25.748Z'
+}

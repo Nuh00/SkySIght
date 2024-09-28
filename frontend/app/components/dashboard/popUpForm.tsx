@@ -102,6 +102,21 @@ export const PopUpForm = ({
     });
   };
 
+  const handleKeyDown = async (e: React.KeyboardEvent) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      e.stopPropagation();
+      
+      // Trigger form validation
+      const result = await form.trigger();
+      
+      // If form is valid, submit it
+      if (result) {
+        form.handleSubmit(onSubmit)();
+      }
+    }
+  };
+
   return (
     <>
       {/* <Toaster position="top-center" /> */}
@@ -112,7 +127,8 @@ export const PopUpForm = ({
       >
         <div
           onClick={(e) => e.stopPropagation()}
-          className="min-w-[80%] sm:min-w-[400px] rounded-lg shadow w-[480px] "
+          onKeyDown={handleKeyDown}
+          className="min-w-[80%] sm:min-w-[400px] rounded-lg shadow w-[480px]"
         >
           <CardWrapperForm headerLabel="Create a new job">
             <Form {...form}>
@@ -353,7 +369,6 @@ export const PopUpForm = ({
     </>
   );
 };
-
 // function CreateJob() {
 //   const [showForm, setShowForm] = useState(false);
 
