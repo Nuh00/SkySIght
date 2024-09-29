@@ -20,7 +20,23 @@ export default async function middleware(request: NextRequest) {
     const absoluteUrl = new URL("/dashboard", request.nextUrl.origin);
     return NextResponse.redirect(absoluteUrl.toString());
   }
-    return NextResponse.next();
+
+  if (session && request.nextUrl.pathname === "/login") {
+    const absoluteUrl = new URL("/dashboard", request.nextUrl.origin);
+    return NextResponse.redirect(absoluteUrl.toString());
+  }
+
+  if (session && request.nextUrl.pathname === "/register") {
+    const absoluteUrl = new URL("/dashboard", request.nextUrl.origin);
+    return NextResponse.redirect(absoluteUrl.toString());
+  }
+
+  
+
+
+  return NextResponse.next();
+
+
 }
 
 export const config = {
