@@ -117,11 +117,7 @@ export const loginWithCreds = async (values: z.infer<typeof LoginSchema>) => {
   }
 
   try {
-    const result = await signIn("resend", {
-      from: "Skysight <noreply@skysight.app>",
-      to: email,
-      redirectTo: "/dashboard",
-    });
+    const result = await signIn("resend", { email, redirectTo: "/dashboard" });
 
     if (!result) {
       return { error: "Sign-in failed" };
