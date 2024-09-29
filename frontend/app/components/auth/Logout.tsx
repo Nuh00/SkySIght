@@ -4,15 +4,19 @@ import { logout } from "@/actions/auth";
 import { Button } from "@/components/ui/button";
 
 const Logout = () => {
+  const [isLoading, setIsLoading] = useState(false);
+  const handleLogout = async () => {
+    setIsLoading(true);
+    await logout();
+    setIsLoading(false);
+  };
   return (
-    <div className="flex" onClick={() => logout()}>
-      <Button variant="destructive" size="lg" onClick={() => logout()}>
-        Logout
+    <div className="flex" onClick={handleLogout}>
+      <Button variant="destructive" size="lg" disabled={isLoading}>
+        {isLoading ? "Logging out..." : "Logout"}
       </Button>
     </div>
   );
 };
 
 export default Logout;
-
-
