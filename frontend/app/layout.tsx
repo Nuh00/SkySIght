@@ -6,7 +6,6 @@ import { SessionProvider } from "next-auth/react";
 import { auth } from "@/auth";
 import Navbar from "./components/Navbar";
 import { StoreProvider } from "@/state/StoreProvider";
-import DoveIcon from "@/public/dove.svg";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -14,7 +13,7 @@ export const metadata: Metadata = {
   title: "SkySight",
   description: "Your job application tracker",
   icons: {
-    icon: DoveIcon,
+    icon: "../public/dove.svg",
   },
 };
 
