@@ -41,5 +41,5 @@ export const createJobSchema = z.object({
     }),
 
   appliedDate: z.string().optional(),
-  link: z.string().url().optional(),
+  link: z.string().optional(),
 });
