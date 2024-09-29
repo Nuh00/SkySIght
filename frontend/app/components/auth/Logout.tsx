@@ -2,6 +2,7 @@
 
 import { logout } from "@/actions/auth";
 import { Button } from "@/components/ui/button";
+import { useState } from "react";
 
 const Logout = () => {
   const [isLoading, setIsLoading] = useState(false);
