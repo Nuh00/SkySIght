@@ -31,7 +31,7 @@ function Home() {
   console.log(`home page rendered user session data:`, session);
 
   useEffect(() => {
-    const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
+    const apiUrl = "http://localhost:3000";
     console.log(`home page rendered api url:`, apiUrl);
     const fetchData = async () => {
       const response = await fetch(`${apiUrl}/api/dashboard`, {

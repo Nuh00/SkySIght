@@ -23,7 +23,8 @@ export const {
     Github,
     Google,
     Resend({
-      from: "Acme <onboarding@resend.dev>",
+      from: "SkySight <noreply@skysight.app>",
+      // Make sure this email matches a verified sender identity in your Resend account
     }),
     Credentials,
   ],

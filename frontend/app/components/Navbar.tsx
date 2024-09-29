@@ -2,12 +2,8 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { logout } from "@/actions/auth";
 import { auth } from "@/auth";
 import Logout from "./auth/Logout";
-import dove from "@/public/dove.svg";
-import sharpDoveB from "@/public/sharpDoveB.svg";
-import sharpDoveW from "@/public/sharpDoveW.svg";
 import eagleBlack from "@/public/eagleBlack.svg";
 import eagleWhite from "@/public/eagleWhite.svg";
 
