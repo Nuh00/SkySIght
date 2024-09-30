@@ -106,10 +106,10 @@ export const PopUpForm = ({
     if (e.key === "Enter") {
       e.preventDefault();
       e.stopPropagation();
-      
+
       // Trigger form validation
       const result = await form.trigger();
-      
+
       // If form is valid, submit it
       if (result) {
         form.handleSubmit(onSubmit)();
@@ -148,7 +148,7 @@ export const PopUpForm = ({
                               <FormLabel>Role</FormLabel>
                               <FormControl>
                                 <Input
-                                  className="dark:text-light-purple text-black"
+                                  className=""
                                   {...field}
                                   placeholder="Enter role"
                                   disabled={isPending}
