@@ -28,6 +28,6 @@
     ".next/types/**/*.ts",
     "lib/mongo.js",
     "node_modules/next-auth/**/*.ts" // 
-, "app/model/user-model.js"  ],
+, "app/model/user-model.js", "lib/sample.js"  ],
   "exclude": ["node_modules"]
 }
