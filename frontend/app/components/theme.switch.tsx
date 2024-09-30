@@ -43,11 +43,11 @@ function ThemeSwithButton({ forceDarkTheme }: { forceDarkTheme: boolean }) {
 
   return (
     <button
-      className="fixed bottom-8 right-20     
+      className={!forceDarkTheme ?  `fixed bottom-8 right-20     
      bg-white w-[3rem] h-[3rem] flex justify-center items-center bg-opacity-80 backdrop-blur-[0.5rem]
      border border-white border-opacity-40 rounded-full shadow-2xl hover:scale-[1.15] active:scale-105
         transition-transform duration-200 ease-in-out z-50
-      "
+      `: `hidden`}
     >
       {theme === "light" ? (
         <BsSun className="text-2xl  text-red-500 " onClick={toggleTheme} />
