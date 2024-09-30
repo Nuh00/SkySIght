@@ -134,7 +134,7 @@ export const PopUpForm = ({
             <Form {...form}>
               <form
                 onSubmit={form.handleSubmit(onSubmit)}
-                className="space-y-6 text-light-purple h-full py-10"
+                className="space-y-6 dark:text-light-purple text-black h-full py-10"
               >
                 <main className="h-full flex flex-col items-center justify-between">
                   <div className="space-y-4">
