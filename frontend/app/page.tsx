@@ -12,7 +12,7 @@ import ThemeContextProvider from "./components/theme.switch";
 function Home() {
   return (
     <div>
-      <ThemeContextProvider forceDarkTheme={false} />
+      <ThemeContextProvider forceDarkTheme={true} />
       <HeroSection />
       <Footer />
     </div>
