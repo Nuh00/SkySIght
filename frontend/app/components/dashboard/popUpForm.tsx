@@ -148,7 +148,7 @@ export const PopUpForm = ({
                               <FormLabel>Role</FormLabel>
                               <FormControl>
                                 <Input
-                                  className="text-light-purple"
+                                  className="dark:text-light-purple text-black"
                                   {...field}
                                   placeholder="Enter role"
                                   disabled={isPending}
@@ -296,7 +296,7 @@ export const PopUpForm = ({
                                 <Button
                                   variant={"outline"}
                                   className={cn(
-                                    "w-[170px] justify-start text-left font-normal bg-black mb-40"
+                                    "w-[170px] justify-start text-left font-normal dark:bg-black bg- mb-40"
                                     // !date && "text-muted-foreground"
                                   )}
                                 >
