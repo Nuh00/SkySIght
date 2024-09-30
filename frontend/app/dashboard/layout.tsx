@@ -22,7 +22,7 @@ export default function RootLayout({
         </div>
       </div>
       {children}
-      <ThemeSwitchButton />
+      <ThemeSwitchButton forceDarkTheme={false} />
       <Toaster position="top-center" />
     </div>
   );
