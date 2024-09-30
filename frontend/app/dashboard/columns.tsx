@@ -208,9 +208,7 @@ export const columns: ColumnDef<Job, any>[] = [
     accessorKey: "salary",
     cell: ({ row }) => {
       const salary = row.getValue("salary");
-      console.log("Raw salary value:", salary, "Type:", typeof salary);
       const formattedSalary = formatSalary(Number(salary));
-      console.log("Formatted salary:", formattedSalary);
       return <div className="font-bold">{formattedSalary}</div>;
     },
   },

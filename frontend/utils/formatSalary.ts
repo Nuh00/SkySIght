@@ -1,5 +1,4 @@
 export function formatSalary(salary: number): string {
-  console.log("Formatting salary:", salary);
   
 
   

@@ -28,11 +28,8 @@ function Home() {
   const dispatch = useDispatch<AppDispatch>();
   const { data: session } = useSession(); // ?? No way this is all I need to get the user session data
 
-  console.log(`home page rendered user session data:`, session);
-
   useEffect(() => {
     const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-    console.log(`home page rendered api url:`, apiUrl);
     const fetchData = async () => {
       const response = await fetch(`${apiUrl}/api/dashboard`, {
         method: "POST",
@@ -42,10 +39,7 @@ function Home() {
         body: JSON.stringify({ session }),
       });
 
-      console.log(`home page rendered response:`, response);
-
       const data: Job[] = await response.json();
-      console.log("Raw job data from API:", data);
 
       if (response.status === 429) {
         toast.error("Too many requests. Please try again later.");
@@ -57,8 +51,6 @@ function Home() {
 
     fetchData();
   }, [dispatch, session]);
-
-  console.log(reduxJobs);
 
   return (
     <div className="h-screen w-full dark:text-white text-black  flex flex-col justify-center items-center gap-2">

@@ -4,19 +4,15 @@ import { ReactTyped } from "react-typed";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useState, useEffect } from "react";
 
-
-
-
 function LoginHeroSection() {
   const [isVideoLoaded, setIsVideoLoaded] = useState(false);
   useEffect(() => {
-    const video = document.createElement('video');
+    const video = document.createElement("video");
     video.src = "https://dvy41h3mvcuey.cloudfront.net/skySightPreview.mp4";
     video.onloadeddata = () => {
       setIsVideoLoaded(true);
     };
   }, []);
-
 
   return (
     <main className="h-[90vh] flex justify-center items-center bg-black">

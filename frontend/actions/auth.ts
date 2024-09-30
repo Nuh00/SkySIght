@@ -25,21 +25,17 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
   // Validate fields... client side validation can always be bypassed
 
   const validatedFields = RegisterSchema.safeParse(values);
-  console.log(`yooooo`, validatedFields);
 
   if (!validatedFields.success) {
     return { error: "Invalid fields" };
   }
 
   // Create user
-  console.log("about to create user");
   try {
     const { name, email, password } = validatedFields.data;
     // Hash password
 
     const hashedPassword = await hash(password, 10);
-
-    console.log("about to check if user exists");
 
     const existingUser = await getUserByEmail(email);
 
@@ -47,7 +43,6 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
       return { error: "User already exists" };
     }
 
-    console.log("about to create user in db");
 
     const user = await prisma.user.create({
       data: {
@@ -57,7 +52,6 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
       },
     });
 
-    console.log("user created in db");
 
     // const verificationToken = await generateVerificationToken(email);
     // await sendVerificationEmail(email, verificationToken.token);

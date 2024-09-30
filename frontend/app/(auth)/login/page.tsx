@@ -16,7 +16,6 @@ import { redirect } from "next/navigation";
 const Login = async () => {
   const session = await auth();
 
-  console.log("*****************", session);
 
   return (
     <div className="">

@@ -77,7 +77,6 @@ export const PopUpForm = ({
     setSuccess(undefined);
 
     startTransition(async () => {
-      console.log(values);
 
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/api/dashboard/create`,
@@ -319,7 +318,6 @@ export const PopUpForm = ({
                                   // onSelect={(data) => setDate(data || null)}
 
                                   onSelect={(date) => {
-                                    console.log(`date selected`, date);
 
                                     if (date) {
                                       field.onChange(format(date, "PPP"));

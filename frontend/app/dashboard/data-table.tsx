@@ -172,7 +172,6 @@ export function DataTable<TData, TValue>({
           </Button>
           <Button
             onClick={() => {
-              console.log("Why is this not working?");
               table?.nextPage();
             }}
             disabled={!table?.getCanNextPage()}

@@ -34,7 +34,6 @@ export const jobSlice = createSlice({
     initialJobs: (state, action: PayloadAction<Job[]>) => {
 
       if (!Array.isArray(action.payload)) {
-        console.error('Received non-array payload:', action.payload);
         state.jobs = []; // Set to empty array if payload is not an array
         return;
       }
