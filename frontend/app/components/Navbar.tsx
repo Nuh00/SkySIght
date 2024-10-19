@@ -14,7 +14,7 @@ const Navbar = async () => {
     <div className="fixed top-0 w-full h-24 p-6    ">
       <div className="flex items-center justify-between p-6  h-24 mx-auto px-4  ">
         <div className="flex gap-2">
-          <div>
+          <div className="md:flex hidden">
             <Link
               href="/"
               className="text-2xl font-bold text-black dark:text-white"
@@ -56,7 +56,7 @@ const Navbar = async () => {
         </div>
         <div className="flex gap-5">
           {!session?.user ? (
-            <>
+            <div className="md:flex gap-5 hidden">
               <Button>
                 <Link href="/login" className=" ">
                   <div> Login</div>
@@ -67,7 +67,7 @@ const Navbar = async () => {
                   <div> Register</div>
                 </Link>
               </Button>
-            </>
+            </div>
           ) : (
             <>
               <Logout />

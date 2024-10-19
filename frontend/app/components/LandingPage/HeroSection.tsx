@@ -16,7 +16,7 @@ function LoginHeroSection() {
 
   return (
     <main className="h-[90vh] flex justify-center items-center bg-black">
-      <div className="flex gap-10 items-center justify-between p-10 w-full h-full">
+      <div className="flex flex-col md:flex-row gap-10 items-center justify-between p-10 w-full h-full">
         <div className="flex-1">
           <h1 className="flex flex-col items-center justify-center h-full w-full text-3xl font-semibold text-light-purple">
             <ReactTyped
